@@ -1,0 +1,195 @@
+Running DHSVM Version 3.2
+
+STARTING INITIALIZATION PROCEDURES
+
+Initializing file IO
+Initializing tables
+
+Initializing terrain maps
+Spatial lateral conductivity map not provided, generating map
+Spatial soil porosity map not provided, generating map
+Vegetation fractional coverage created from vegetation table
+No spatial LAI provided, generating from vegetation table
+Initializing snow map
+No input of precipitation multiplier map - no correction is made
+
+Basin has 166352 active pixels
+
+The following VEG types are in the current basin
+Class # 1 of Type: Evergreen Needleleaf has fraction basin area: 0.307
+Class # 4 of Type: Deciduous Broadleaf has fraction basin area: 0.000
+Class # 5 of Type: Mixed Forest has fraction basin area: 0.274
+Class # 9 of Type: Open Shrub has fraction basin area: 0.390
+Class # 10 of Type: Grassland has fraction basin area: 0.025
+Class # 12 of Type: Bare has fraction basin area: 0.001
+Class # 13 of Type: Urban has fraction basin area: 0.000
+Class # 14 of Type: Water has fraction basin area: 0.000
+Class # 17 of Type: Mesic Conif Forest (Wet) has fraction basin area: 0.003
+
+The following SOIL types are in the current basin
+Class # 3 of Type: SANDY LOAM has fraction basin area: 0.119
+Class # 6 of Type: LOAM has fraction basin area: 0.877
+Class # 8 of Type: SILTY CLAY LOAM has fraction basin area: 0.003
+Class # 10 of Type: SANDY CLAY has fraction basin area: 0.000
+
+Some estimates for current vegetation specification
+
+Vegetation Type: Evergreen Needleleaf
+2meter    wind speed fraction of ref level 0.157
+
+Vegetation Type: Deciduous Broadleaf
+2meter    wind speed fraction of ref level 0.201
+
+Vegetation Type: Mixed Forest
+2meter    wind speed fraction of ref level 0.260
+
+Vegetation Type: Open Shrub
+2meter    wind speed fraction of ref level 0.630
+
+Vegetation Type: Grassland
+2meter    wind speed fraction of ref level 0.630
+
+Vegetation Type: Bare
+2meter    wind speed fraction of ref level 0.630
+
+Vegetation Type: Urban
+2meter    wind speed fraction of ref level 0.630
+
+Vegetation Type: Water
+2meter    wind speed fraction of ref level 0.630
+
+Vegetation Type: Mesic Conif Forest (Wet)
+2meter    wind speed fraction of ref level 0.381
+
+Monthly attenuation coeff. for the VEG Type with an overstory:
+
+
+Evergreen Needleleaf:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Evergreen Broadleaf:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Deciduous Needleleaf:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Deciduous Broadleaf:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Mixed Forest:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Woodland:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Wooded Grassland:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Coastal Conifer Forest:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Xeric Conif Forest (Dry):
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Mesic Conif Forest (Wet):
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+Subalpine Conif Forest:
+0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065 0.065
+
+
+Initializing Road/Stream Networks
+	Reading Stream data
+unknown program: input/stream/stream.network.csv: line 1, field 7: unable to match field
+
+Evaluating 2 Met stations for inclusion
+Final number of stations in bounding box is 2
+
+Initializing meteorological maps
+
+Checking interpolation weights
+Sum should be 255 for all pixels
+Some error is expected due to roundoff
+Errors greater than +/- 2 Percent are:
+84118 pixels are linked to 1 met stations
+82234 pixels are linked to 2 met stations
+
+Summary info on met stations used for current model run
+        Name		Y	X	In Mask	Defined Elev	Actual Elev
+            Station1	152	126	1	1688.0		1668.0
+            Station2	136	551	0	1381.0		1303.0
+
+Initializing dump procedures
+Restoring model state
+WARNING:excess water in soil profile is 0.000559 m^3
+Expect possible large flood wave during first timesteps
+
+reading in new PRISM field for month 10
+reading in new shadow map for month 10
+changing LAI, albedo and diffuse transmission parameters
+reading in new PRISM field for month 10
+reading in new shadow map for month 10
+changing LAI, albedo and diffuse transmission parameters
+10/01/2016-00:00:00
+Storing model state
+10/01/2016-00:00:00
+storing channel state
+10/02/2016-00:00:00
+10/03/2016-00:00:00
+10/04/2016-00:00:00
+10/05/2016-00:00:00
+10/06/2016-00:00:00
+10/07/2016-00:00:00
+10/08/2016-00:00:00
+10/09/2016-00:00:00
+10/10/2016-00:00:00
+10/11/2016-00:00:00
+10/12/2016-00:00:00
+10/13/2016-00:00:00
+10/14/2016-00:00:00
+10/15/2016-00:00:00
+10/16/2016-00:00:00
+10/17/2016-00:00:00
+10/18/2016-00:00:00
+10/19/2016-00:00:00
+10/20/2016-00:00:00
+10/21/2016-00:00:00
+10/22/2016-00:00:00
+10/23/2016-00:00:00
+10/24/2016-00:00:00
+10/25/2016-00:00:00
+10/26/2016-00:00:00
+10/27/2016-00:00:00
+10/28/2016-00:00:00
+10/29/2016-00:00:00
+10/30/2016-00:00:00
+10/31/2016-00:00:00
+
+  ********************************               Depth
+  Runoff Final Mass Balance                        mm
+  ********************************        ------------
+  Total Inflow ...................        49.729
+      Precip/Inflow ..............        49.729
+      SnowVaporFlux ..............        0.000
+  Total Outflow ..................        26.893
+      ET .........................        26.850
+      ChannelInt .................        0.043
+      RoadInt ....................        0.000
+  Storage Change .................        22.543
+      Initial Storage ............        1582.034
+      Final Storage ..............        1604.577
+          Final SWQ ..............        0.000
+          Final Soil Moisture ....        260.807
+          Final Surface ..........        1343.770
+          Final Road Surface .....        0.000
+
+  Mass added to glacier ..........        0.000
+  ******************************************************
+  Mass Error (mm).................        -0.293
+FINAL MASS BALANCE ERROR:  TOO MUCH SURFACE WATER PONDING 1343.770
+
+END OF MODEL RUN
+
+***********************************************************************************
+Runtime Summary:
+  0.04 hours elapsed for the simulation period of 744 hours (31.0 days) 
