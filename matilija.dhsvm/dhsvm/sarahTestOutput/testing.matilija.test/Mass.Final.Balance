@@ -1,0 +1,23 @@
+
+  ********************************               Depth
+  Runoff Final Mass Balance                        mm
+  ********************************        ------------
+  Total Inflow ...................        49.729
+      Precip/Inflow ..............        49.729
+      SnowVaporFlux ..............        0.000
+  Total Outflow ..................        26.893
+      ET .........................        26.850
+      ChannelInt .................        0.043
+      RoadInt ....................        0.000
+  Storage Change .................        22.543
+      Initial Storage ............        1582.034
+      Final Storage ..............        1604.577
+          Final SWQ ..............        0.000
+          Final Soil Moisture ....        260.807
+          Final Surface ..........        1343.770
+          Final Road Surface .....        0.000
+
+  Mass added to glacier ..........        0.000
+  ******************************************************
+  Mass Error (mm).................        -0.293
+FINAL MASS BALANCE ERROR:  TOO MUCH SURFACE WATER PONDING 1343.770
