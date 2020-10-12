@@ -1,0 +1,4 @@
+name: cem
+language: c
+package: cem
+class: Cem
