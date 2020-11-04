@@ -1,5 +1,8 @@
-import pymt
-from pymt.models import Waves
+#import pymt
+#from pymt.models import Waves
+
+from pymt import plugins
+cem = plugins.Cem()
 
 model = Waves()
 cfg_file, cfg_dir = model.setup()
