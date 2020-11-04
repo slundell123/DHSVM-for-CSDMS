@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/test_grid_info.dir/test_grid_info.cxx.o  -o test_grid_info -Wl,-rpath,/home/slundell/Documents/DHSVM-for-CSDMS/BMI/bmi-dhsvm-cxx/_build/dhsvm ../dhsvm/libbmidhsvmcxx.so 

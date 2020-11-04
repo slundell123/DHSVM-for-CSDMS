@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/test_print_var_names.dir/test_print_var_names.cxx.o  -o test_print_var_names -Wl,-rpath,/home/slundell/Documents/DHSVM-for-CSDMS/BMI/bmi-dhsvm-cxx/_build/dhsvm ../dhsvm/libbmidhsvmcxx.so 
