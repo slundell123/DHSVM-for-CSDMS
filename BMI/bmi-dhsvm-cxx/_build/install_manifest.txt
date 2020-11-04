@@ -1,0 +1,5 @@
+/usr/local/bin/run_bmidhsvmcxx
+/usr/local/lib/libbmidhsvmcxx.so
+/usr/local/include/bmi_dhsvm.hxx
+/usr/local/include/dhsvm.hxx
+/usr/local/lib/pkgconfig/dhsvmcxx.pc
