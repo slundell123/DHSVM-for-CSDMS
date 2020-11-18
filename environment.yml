@@ -6,6 +6,6 @@ dependencies:
   - make
   - cmake
   - pkg-config
-  - c-compiler
-  - bmi-c
+  - cxx-compiler
+  - bmi-cxx
   - babelizer
