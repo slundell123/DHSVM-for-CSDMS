@@ -1,0 +1,5 @@
+/home/slundell/anaconda3/envs/wrap2/bin/run_bmiheatcxx
+/home/slundell/anaconda3/envs/wrap2/lib/libbmiheatcxx.so
+/home/slundell/anaconda3/envs/wrap2/include/bmi_heat.hxx
+/home/slundell/anaconda3/envs/wrap2/include/heat.hxx
+/home/slundell/anaconda3/envs/wrap2/lib/pkgconfig/heatcxx.pc
