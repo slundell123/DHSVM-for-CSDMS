@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../heat/bmi_heat.hxx
+string
+-
+iostream
+-
+bmi.hxx
+-
+heat.hxx
+../heat/heat.hxx
+
+../heat/heat.hxx
+
+/home/slundell/Documents/DHSVM-for-CSDMS/BMI/bmi-example-cxx-2/testing/test_irf.cxx
+iostream
+-
+stdio.h
+-
+stdlib.h
+-
+vector
+-
+heat.hxx
+-
+bmi.hxx
+-
+bmi_heat.hxx
+-
+
+/home/slundell/anaconda3/envs/wrap2/include/bmi.hxx
+

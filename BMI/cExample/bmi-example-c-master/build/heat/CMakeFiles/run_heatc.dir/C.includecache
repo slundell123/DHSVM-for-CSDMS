@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/slundell/Documents/DHSVM-for-CSDMS/BMI/cExample/bmi-example-c-master/heat/heat.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+heat.h
+/home/slundell/Documents/DHSVM-for-CSDMS/BMI/cExample/bmi-example-c-master/heat/heat.h
+
+/home/slundell/Documents/DHSVM-for-CSDMS/BMI/cExample/bmi-example-c-master/heat/heat.h
+
+/home/slundell/Documents/DHSVM-for-CSDMS/BMI/cExample/bmi-example-c-master/heat/main.c
+stdio.h
+-
+heat.h
+/home/slundell/Documents/DHSVM-for-CSDMS/BMI/cExample/bmi-example-c-master/heat/heat.h
+

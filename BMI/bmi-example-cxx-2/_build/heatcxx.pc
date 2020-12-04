@@ -1,0 +1,5 @@
+Name: HeatCXX
+Description: 2D Heat Equation
+Version: 0.2
+Libs: -L/home/slundell/anaconda3/envs/wrap2/lib -lbmiheatcxx
+Cflags: -I/home/slundell/anaconda3/envs/wrap2/include
