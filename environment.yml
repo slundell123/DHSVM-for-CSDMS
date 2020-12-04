@@ -9,3 +9,4 @@ dependencies:
   - cxx-compiler
   - bmi-cxx
   - babelizer
+  - numpy >= 1.19
