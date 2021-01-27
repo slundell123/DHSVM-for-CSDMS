@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/test_initialize_from_file.dir/test_initialize_from_file.cxx.o  -o test_initialize_from_file -Wl,-rpath,/home/slundell/Documents/DHSVM-for-CSDMS/BMI/bmi-dhsvm-cxx/_build/dhsvm ../dhsvm/libbmidhsvmcxx.so 

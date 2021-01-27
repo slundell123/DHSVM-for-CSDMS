@@ -1,6 +1,0 @@
-/home/slundell/anaconda3/envs/wrap/bin/run_heatc
-/home/slundell/anaconda3/envs/wrap/bin/run_bmiheatc
-/home/slundell/anaconda3/envs/wrap/lib/libbmiheatc.so
-/home/slundell/anaconda3/envs/wrap/include/bmi_heat.h
-/home/slundell/anaconda3/envs/wrap/include/heat.h
-/home/slundell/anaconda3/envs/wrap/lib/pkgconfig/heatc.pc

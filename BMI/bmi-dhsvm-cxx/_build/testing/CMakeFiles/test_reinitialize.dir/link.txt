@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/test_reinitialize.dir/test_reinitialize.cxx.o  -o test_reinitialize -Wl,-rpath,/home/slundell/Documents/DHSVM-for-CSDMS/BMI/bmi-dhsvm-cxx/_build/dhsvm ../dhsvm/libbmidhsvmcxx.so 
