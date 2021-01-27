@@ -1,5 +1,0 @@
-Name: DhsvmCXX
-Description: 2D Dhsvm Equation
-Version: 0.2
-Libs: -L/usr/local/lib -lbmidhsvmcxx
-Cflags: -I/usr/local/include
