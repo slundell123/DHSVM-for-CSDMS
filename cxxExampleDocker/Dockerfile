@@ -9,7 +9,10 @@ RUN echo "source activate wrap" >> ~/.bashrc
 ENV CONDA_PREFIX=/opt/conda/envs/wrap
 ENV PATH ${CONDA_PREFIX}/bin:$PATH
 
-RUN git clone https://github.com/csdms/bmi-example-cxx
+# Uncomment below line to pull example cxx from github (and comment out copy)
+# RUN git clone https://github.com/csdms/bmi-example-cxx
+# Use below copy command on downloaded example code
+COPY bmi-example-cxx /opt/bmi-example-cxx
 WORKDIR /opt/bmi-example-cxx/_build
 RUN cmake .. -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} && make install
 
