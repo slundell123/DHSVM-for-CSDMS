@@ -1,8 +1,8 @@
-#ifndef HEAT_INCLUDED
-#define HEAT_INCLUDED
+#ifndef Dimensionless_Discharge_INCLUDED
+#define Dimensionless_Discharge_INCLUDED
 
-namespace heat {
-  class Heat {
+namespace dimensionlessDischarge {
+  class DimensionlessDischarge {
     private:
       double alpha;
 
@@ -19,9 +19,9 @@ namespace heat {
       double dt;
       double **z;
 
-      Heat();
-      Heat(std::string config_file);
-      ~Heat();
+      DimensionlessDischarge();
+      DimensionlessDischarge(std::string config_file);
+      ~DimensionlessDischarge();
       void advance_in_time ();
   };
 };

@@ -2,14 +2,14 @@
 #include <cstring>
 #include <stdlib.h>
 #include <stdio.h>
-#include "heat.hxx"
+#include "dimensionless_discharge.hxx"
 
 
 #define OK (1)
 
 
 int
-heat_solve_2d (double ** z, int shape[2], double spacing[2], double alpha,
+dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], double alpha,
     double dt, double ** out)
 {
   {
@@ -44,19 +44,19 @@ heat_solve_2d (double ** z, int shape[2], double spacing[2], double alpha,
   return OK;
 }
 
-void heat::Heat::
+void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
   const int n_elements = this->shape[0] * this->shape[1];
-  heat_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
+  dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
       this->temp_z);
   this->time += this->dt;
   memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
 }
 
 
-heat::Heat::
-Heat(std::string config_file)
+dimensionlessDischarge::DimensionlessDischarge::
+DimensionlessDischarge(std::string config_file)
 {
   FILE * fp;
   double alpha = 1.;
@@ -84,7 +84,7 @@ Heat(std::string config_file)
 }
 
 
-void heat::Heat::
+void dimensionlessDischarge::DimensionlessDischarge::
 _initialize_arrays(void)
 {
   int i;
@@ -119,8 +119,8 @@ _initialize_arrays(void)
 }
 
 
-heat::Heat::
-Heat()
+dimensionlessDischarge::DimensionlessDischarge::
+DimensionlessDischarge()
 {
   this->alpha = 1.;
   this->t_end = 10.;
@@ -137,8 +137,8 @@ Heat()
 }
 
 
-heat::Heat::
-~Heat()
+dimensionlessDischarge::DimensionlessDischarge::
+~DimensionlessDischarge()
 {
   this->time = 0.;
 }
