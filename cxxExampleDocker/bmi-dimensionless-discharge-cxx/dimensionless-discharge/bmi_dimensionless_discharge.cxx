@@ -5,27 +5,27 @@
 #include <cstdlib>
 #include<vector>
 
-#include "heat.hxx"
+#include "dimensionless_discharge.hxx"
 #include <bmi.hxx>
-#include "bmi_heat.hxx"
+#include "bmi_dimensionless_discharge.hxx"
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 Initialize (std::string config_file)
 {
   if (config_file.compare("") != 0 )
-    this->_model = heat::Heat(config_file);
+    this->_model = dimensionlessDischarge::DimensionlessDischarge(config_file);
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 Update()
 {
   this->_model.advance_in_time();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 UpdateUntil(double t)
 {
   double time;
@@ -49,14 +49,14 @@ UpdateUntil(double t)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 Finalize()
 {
-  this->_model.~Heat();
+  this->_model.~DimensionlessDischarge();
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetVarGrid(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
@@ -66,7 +66,7 @@ GetVarGrid(std::string name)
 }
 
 
-std::string BmiHeat::
+std::string BmiDimensionlessDischarge::
 GetVarType(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
@@ -76,7 +76,7 @@ GetVarType(std::string name)
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetVarItemsize(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
@@ -86,7 +86,7 @@ GetVarItemsize(std::string name)
 }
 
 
-std::string BmiHeat::
+std::string BmiDimensionlessDischarge::
 GetVarUnits(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
@@ -96,7 +96,7 @@ GetVarUnits(std::string name)
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetVarNbytes(std::string name)
 {
   int itemsize;
@@ -109,7 +109,7 @@ GetVarNbytes(std::string name)
 }
 
 
-std::string BmiHeat::
+std::string BmiDimensionlessDischarge::
 GetVarLocation(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
@@ -119,7 +119,7 @@ GetVarLocation(std::string name)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridShape(const int grid, int *shape)
 {
   if (grid == 0) {
@@ -129,7 +129,7 @@ GetGridShape(const int grid, int *shape)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridSpacing (const int grid, double * spacing)
 {
   if (grid == 0) {
@@ -139,7 +139,7 @@ GetGridSpacing (const int grid, double * spacing)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridOrigin (const int grid, double *origin)
 {
   if (grid == 0) {
@@ -149,7 +149,7 @@ GetGridOrigin (const int grid, double *origin)
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetGridRank(const int grid)
 {
   if (grid == 0)
@@ -159,7 +159,7 @@ GetGridRank(const int grid)
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetGridSize(const int grid)
 {
   if (grid == 0)
@@ -169,7 +169,7 @@ GetGridSize(const int grid)
 }
 
 
-std::string BmiHeat::
+std::string BmiDimensionlessDischarge::
 GetGridType(const int grid)
 {
   if (grid == 0)
@@ -179,28 +179,28 @@ GetGridType(const int grid)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridX(const int grid, double *x)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridY(const int grid, double *y)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridZ(const int grid, double *z)
 {
   throw NotImplemented();
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetGridNodeCount(const int grid)
 {
   if (grid == 0)
@@ -210,49 +210,49 @@ GetGridNodeCount(const int grid)
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetGridEdgeCount(const int grid)
 {
   throw NotImplemented();
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetGridFaceCount(const int grid)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridEdgeNodes(const int grid, int *edge_nodes)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridFaceEdges(const int grid, int *face_edges)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridFaceNodes(const int grid, int *face_nodes)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetGridNodesPerFace(const int grid, int *nodes_per_face)
 {
   throw NotImplemented();
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetValue (std::string name, void *dest)
 {
   void * src = NULL;
@@ -265,7 +265,7 @@ GetValue (std::string name, void *dest)
 }
 
 
-void *BmiHeat::
+void *BmiDimensionlessDischarge::
 GetValuePtr (std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
@@ -275,7 +275,7 @@ GetValuePtr (std::string name)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 GetValueAtIndices (std::string name, void *dest, int *inds, int len)
 {
   void * src = NULL;
@@ -298,7 +298,7 @@ GetValueAtIndices (std::string name, void *dest, int *inds, int len)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 SetValue (std::string name, void *src)
 {
   void * dest = NULL;
@@ -313,7 +313,7 @@ SetValue (std::string name, void *src)
 }
 
 
-void BmiHeat::
+void BmiDimensionlessDischarge::
 SetValueAtIndices (std::string name, int * inds, int len, void *src)
 {
   void * dest = NULL;
@@ -336,28 +336,28 @@ SetValueAtIndices (std::string name, int * inds, int len, void *src)
 }
 
 
-std::string BmiHeat::
+std::string BmiDimensionlessDischarge::
 GetComponentName()
 {
-  return "The 2D Heat Equation";
+  return "The 2D Dimensionless Discharge Equation";
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetInputItemCount()
 {
   return this->input_var_name_count;
 }
 
 
-int BmiHeat::
+int BmiDimensionlessDischarge::
 GetOutputItemCount()
 {
   return this->output_var_name_count;
 }
 
 
-std::vector<std::string> BmiHeat::
+std::vector<std::string> BmiDimensionlessDischarge::
 GetInputVarNames()
 {
   std::vector<std::string> names;
@@ -369,7 +369,7 @@ GetInputVarNames()
 }
 
 
-std::vector<std::string> BmiHeat::
+std::vector<std::string> BmiDimensionlessDischarge::
 GetOutputVarNames()
 {
   std::vector<std::string> names;
@@ -381,31 +381,31 @@ GetOutputVarNames()
 }
 
 
-double BmiHeat::
+double BmiDimensionlessDischarge::
 GetStartTime () {
   return 0.;
 }
 
 
-double BmiHeat::
+double BmiDimensionlessDischarge::
 GetEndTime () {
   return this->_model.t_end;
 }
 
 
-double BmiHeat::
+double BmiDimensionlessDischarge::
 GetCurrentTime () {
   return this->_model.time;
 }
 
 
-std::string BmiHeat::
+std::string BmiDimensionlessDischarge::
 GetTimeUnits() {
   return "s";
 }
 
 
-double BmiHeat::
+double BmiDimensionlessDischarge::
 GetTimeStep () {
   return this->_model.dt;
 }

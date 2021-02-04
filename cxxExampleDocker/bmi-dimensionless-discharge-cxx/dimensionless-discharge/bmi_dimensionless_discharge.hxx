@@ -1,11 +1,11 @@
-#ifndef BMI_HEAT_H_INCLUDED
-#define BMI_HEAT_H_INCLUDED
+#ifndef BMI_DIMENSIONLESS_DISCHARGE_H_INCLUDED
+#define BMI_DIMENSIONLESS_DISCHARGE_H_INCLUDED
 
 #include <string>
 #include <iostream>
 
 #include <bmi.hxx>
-#include "heat.hxx"
+#include "dimensionless_discharge.hxx"
 
 
 class NotImplemented : public std::logic_error {
@@ -14,9 +14,9 @@ class NotImplemented : public std::logic_error {
 };
 
 
-class BmiHeat : public bmi::Bmi {
+class BmiDimensionlessDischarge : public bmi::Bmi {
   public:
-    BmiHeat() {
+    BmiDimensionlessDischarge() {
       this->input_var_names[0] = "plate_surface__temperature";
       this->output_var_names[0] = "plate_surface__temperature";
     };
@@ -74,7 +74,7 @@ class BmiHeat : public bmi::Bmi {
     void GetGridNodesPerFace(const int grid, int *nodes_per_face);
 
   private:
-    heat::Heat _model;
+    dimensionlessDischarge::DimensionlessDischarge _model;
     static const int input_var_name_count = 1;
     static const int output_var_name_count = 1;
 
