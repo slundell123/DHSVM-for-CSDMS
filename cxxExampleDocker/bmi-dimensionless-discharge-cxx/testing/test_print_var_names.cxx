@@ -3,19 +3,19 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <heat.hxx>
+#include <dimensionless_discharge.hxx>
 #include <bmi.hxx>
-#include <bmi_heat.hxx>
+#include <bmi_dimensionless_discharge.hxx>
 
 
-void print_var_names (BmiHeat model);
+void print_var_names (BmiDimensionlessDischarge model);
 
 int
 main (void)
 {
   int i;
   const int n_steps = 10;
-  BmiHeat model;
+  BmiDimensionlessDischarge model;
   std::string name;
 
   model.Initialize("");
@@ -31,7 +31,7 @@ main (void)
 }
 
 void
-print_var_names (BmiHeat model)
+print_var_names (BmiDimensionlessDischarge model)
 {
   int number_of_names;
   std::vector<std::string> names;

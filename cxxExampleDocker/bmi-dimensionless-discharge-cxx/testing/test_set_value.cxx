@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <heat.hxx>
+#include <dimensionless_discharge.hxx>
 #include <bmi.hxx>
-#include <bmi_heat.hxx>
+#include <bmi_dimensionless_discharge.hxx>
 
 
 void print_matrix (double *m, int n_dims, int * shape);
@@ -15,7 +15,7 @@ main (void)
 {
   int i;
   const int n_steps = 10;
-  BmiHeat model;
+  BmiDimensionlessDischarge model;
   double *new_vals = NULL;
   int *shape = NULL;
   int size;

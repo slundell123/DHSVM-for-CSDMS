@@ -1,11 +1,11 @@
 include (CTest)
 
-include_directories( ${CMAKE_SOURCE_DIR}/heat )
+include_directories( ${CMAKE_SOURCE_DIR}/dimensionlessDischarge )
 
 function(make_test test_name)
   add_test(NAME ${test_name} COMMAND ${test_name})
   add_executable(${test_name} ${test_name}.cxx)
-  target_link_libraries(${test_name} bmiheatcxx)
+  target_link_libraries(${test_name} bmidimensionlessdischargecxx)
 endfunction(make_test)
 
 make_test(test_irf)

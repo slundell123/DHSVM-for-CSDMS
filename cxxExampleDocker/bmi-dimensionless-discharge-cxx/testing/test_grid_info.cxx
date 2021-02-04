@@ -3,17 +3,17 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <heat.hxx>
+#include <dimensionless_discharge.hxx>
 #include <bmi.hxx>
-#include <bmi_heat.hxx>
+#include <bmi_dimensionless_discharge.hxx>
 
 
-void print_var_info (BmiHeat model, std::string var);
+void print_var_info (BmiDimensionlessDischarge model, std::string var);
 
 int
 main (void)
 {
-  BmiHeat model;
+  BmiDimensionlessDischarge model;
   std::string name;
 
   model.Initialize("");
@@ -42,7 +42,7 @@ main (void)
 }
 
 void
-print_var_info(BmiHeat model, std::string var)
+print_var_info(BmiDimensionlessDischarge model, std::string var)
 {
   int *shape;
   double *spacing;

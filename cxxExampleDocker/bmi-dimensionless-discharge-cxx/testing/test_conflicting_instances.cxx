@@ -3,16 +3,16 @@
 #include <iostream>
 #include <vector>
 
-#include <heat.hxx>
+#include <dimensionless_discharge.hxx>
 #include <bmi.hxx>
-#include <bmi_heat.hxx>
+#include <bmi_dimensionless_discharge.hxx>
 
 
 int
 main (void)
 {
-  BmiHeat model1;
-  BmiHeat model2;
+  BmiDimensionlessDischarge model1;
+  BmiDimensionlessDischarge model2;
 
   model1.Initialize("");
   std::cout << "Model 1 initialized" << std::endl;
