@@ -7,7 +7,7 @@ pkg_check_modules(BMICXX REQUIRED IMPORTED_TARGET bmicxx)
 message("--   bmicxx include - ${BMICXX_INCLUDE_DIRS}")
 include_directories(${BMICXX_INCLUDE_DIRS})
 
-add_subdirectory (heat)
+add_subdirectory (dimensionless-discharge)
 add_subdirectory (testing)
 
 include (CTest)
