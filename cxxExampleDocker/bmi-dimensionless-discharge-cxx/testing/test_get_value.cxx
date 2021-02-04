@@ -3,20 +3,20 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <heat.hxx>
+#include <dimensionless_discharge.hxx>
 #include <bmi.hxx>
-#include <bmi_heat.hxx>
+#include <bmi_dimensionless_discharge.hxx>
 
 
-void print_var_values(BmiHeat model, const char *var_name);
-void print_var_column(BmiHeat model, const char *var_name, int colno);
+void print_var_values(BmiDimensionlessDischarge model, const char *var_name);
+void print_var_column(BmiDimensionlessDischarge model, const char *var_name, int colno);
 
 int
 main (void)
 {
   int i;
   const int n_steps = 10;
-  BmiHeat model;
+  BmiDimensionlessDischarge model;
   int size;
   std::string name;
   int rank;
@@ -45,7 +45,7 @@ main (void)
 }
 
 void
-print_var_column(BmiHeat model, const char *name, int colno)
+print_var_column(BmiDimensionlessDischarge model, const char *name, int colno)
 {
   int grid;
   int * shape;
@@ -83,7 +83,7 @@ print_var_column(BmiHeat model, const char *name, int colno)
 }
 
 void
-print_var_values(BmiHeat model, const char *var_name)
+print_var_values(BmiDimensionlessDischarge model, const char *var_name)
 {
   double *var = NULL;
   int i, j;

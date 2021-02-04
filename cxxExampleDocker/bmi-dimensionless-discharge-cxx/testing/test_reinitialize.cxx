@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <vector>
 
-#include <heat.hxx>
+#include <dimensionless_discharge.hxx>
 #include <bmi.hxx>
-#include <bmi_heat.hxx>
+#include <bmi_dimensionless_discharge.hxx>
 
 
 int
@@ -13,7 +13,7 @@ main (void)
 {
   int i;
   const int n_steps = 3;
-  BmiHeat model;
+  BmiDimensionlessDischarge model;
   std::string name;
 
   for (int i=0; i<n_steps; i++) {
