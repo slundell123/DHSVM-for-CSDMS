@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 
-set (HEAT_VERSION 0.2)
-configure_file (${CMAKE_CURRENT_SOURCE_DIR}/heatcxx.pc.cmake
-                ${CMAKE_BINARY_DIR}/heatcxx.pc)
+set (DIMENSIONLESS_DISCHARGE_VERSION 0.2)
+configure_file (${CMAKE_CURRENT_SOURCE_DIR}/dimensionlessdischargecxx.pc.cmake
+                ${CMAKE_BINARY_DIR}/dimensionlessdischargecxx.pc)
 
-set(bmi_heat_lib_SRCS bmi_heat.cxx heat.cxx)
+set(bmi_dimensionless_discharge_lib_SRCS bmi_heat.cxx heat.cxx)
 if(WIN32)
   add_library(bmiheatcxx ${bmi_heat_lib_SRCS})
 else()
