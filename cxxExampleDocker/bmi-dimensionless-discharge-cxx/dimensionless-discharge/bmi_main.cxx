@@ -3,23 +3,23 @@
 #include <iostream>
 #include <vector>
 
-#include "heat.hxx"
+#include "dimensionless_discharge.hxx"
 #include <bmi.hxx>
-#include "bmi_heat.hxx"
+#include "bmi_dimensionless_discharge.hxx"
 
 
 int main(int argc, char *argv[])
 {
-  BmiHeat model;
+  BmiDimensionlessDischarge model;
 
   if (argc != 2) {
-    printf("Usage: run_bmiheatcxx CONFIGURATION_FILE\n\n");
-    printf("Run the heatcxx model through its BMI with a configuration file.\n");
-    printf("Output is written to the file `bmiheatcxx.out`.\n");
+    printf("Usage: run_bmidimensionlessdischargecxx CONFIGURATION_FILE\n\n");
+    printf("Run the dimensionlessdischargecxx model through its BMI with a configuration file.\n");
+    printf("Output is written to the file `bmidimensionlessdischargecxx.out`.\n");
     return bmi::BMI_SUCCESS;
   }
 
-  FILE *fp = fopen("bmiheatcxx.out", "w");
+  FILE *fp = fopen("bmidimensionlessdischargecxx.out", "w");
   fprintf(fp, "Configuration file = %s\n", argv[1]);
 
   fprintf(fp, "Initializing... ");
