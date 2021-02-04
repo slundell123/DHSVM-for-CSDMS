@@ -1,6 +1,6 @@
 include (CTest)
 
-include_directories( ${CMAKE_SOURCE_DIR}/dimensionlessDischarge )
+include_directories( ${CMAKE_SOURCE_DIR}/dimensionless-discharge )
 
 function(make_test test_name)
   add_test(NAME ${test_name} COMMAND ${test_name})
