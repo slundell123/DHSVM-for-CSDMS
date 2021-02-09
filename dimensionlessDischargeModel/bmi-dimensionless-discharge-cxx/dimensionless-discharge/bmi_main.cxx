@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    std::string var_name = "plate_surface__temperature";
+    std::string var_name = "flux";
     int grid, rank, *shape;
     double *var = NULL;
     double time = 0.0;
