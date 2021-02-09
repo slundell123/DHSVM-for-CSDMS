@@ -58,6 +58,13 @@ advance_in_time ()
 dimensionlessDischarge::DimensionlessDischarge::
 DimensionlessDischarge(std::string config_file)
 {
+  // dimensionless Discharge variable initialization with config
+  // TODO: change file to read into these values instead of heat ones
+  this->gravityConst = 9.8; //(m/s^2)
+  this->waterDensityConst = 997.; //(kg/m^2)
+  this->soilDensity = 1.33; //(g/cm^2)
+  this->d50 = 5.8;
+
   FILE * fp;
   double alpha = 1.;
   double t_end = 0.;
@@ -122,6 +129,13 @@ _initialize_arrays(void)
 dimensionlessDischarge::DimensionlessDischarge::
 DimensionlessDischarge()
 {
+  // dimensionless Discharge variable initialization
+  this->gravityConst = 9.8; //(m/s^2)
+  this->waterDensityConst = 997.; //(kg/m^2)
+  this->soilDensity = 1.33; //(g/cm^2)
+  this->d50 = 5.8;
+
+  // heat values
   this->alpha = 1.;
   this->t_end = 10.;
   this->time = 0.;
