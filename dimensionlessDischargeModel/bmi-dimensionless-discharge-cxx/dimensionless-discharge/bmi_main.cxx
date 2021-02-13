@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    std::string var_name = "flux";
+    std::string var_name = "dimensionless_discharge";
     int grid, rank, *shape;
     double *var = NULL;
     double time = 0.0;

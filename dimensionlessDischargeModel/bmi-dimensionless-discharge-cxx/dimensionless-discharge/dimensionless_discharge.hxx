@@ -19,6 +19,8 @@ namespace dimensionlessDischarge {
       // Input Values for dimensionless discharge
       double soilDensity;
       double d50;
+      double flux;
+      double dimensionlessDischarge;
 
 
 
@@ -32,6 +34,8 @@ namespace dimensionlessDischarge {
 
 
       DimensionlessDischarge();
+      double CalculateDimensionlessDischarge();
+      double GetDimensionlessDischarge();
       DimensionlessDischarge(std::string config_file);
       ~DimensionlessDischarge();
       void advance_in_time ();

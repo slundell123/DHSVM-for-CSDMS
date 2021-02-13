@@ -14,7 +14,7 @@ void BmiDimensionlessDischarge::
 Initialize (std::string config_file)
 {
   if (config_file.compare("") != 0 )
-    this->_model = dimensionlessDischarge::DimensionlessDischarge(config_file);
+    this->_model = dimensionlessDischarge::DimensionlessDischarge(config_file); 
 }
 
 
@@ -61,6 +61,8 @@ GetVarGrid(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
     return 0;
+  else if (name.compare("dimensionless_discharge") == 0)
+    return 0;
   else
     return -1;
 }
@@ -70,6 +72,8 @@ std::string BmiDimensionlessDischarge::
 GetVarType(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
+    return "double";
+  else if (name.compare("dimensionless_discharge") == 0)
     return "double";
   else
     return "";
@@ -81,6 +85,8 @@ GetVarItemsize(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
     return sizeof(double);
+  else if (name.compare("dimensionless_discharge") == 0)
+    return sizeof(double);
   else
     return 0;
 }
@@ -91,6 +97,8 @@ GetVarUnits(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
     return "meters";
+  else if (name.compare("dimensionless_discharge") == 0)
+    return "meters"; //Should be done, but it won't let me user none as a data type... 
   else
     return "";
 }
@@ -113,6 +121,8 @@ std::string BmiDimensionlessDischarge::
 GetVarLocation(std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
+    return "node";
+  else if (name.compare("dimensionless_discharge") == 0)
     return "node";
   else
     return "";
@@ -270,6 +280,8 @@ GetValuePtr (std::string name)
 {
   if (name.compare("plate_surface__temperature") == 0)
     return (void*)this->_model.z[0];
+  else if (name.compare("dimensionless_discharge") == 0)
+    return &this->_model.dimensionlessDischarge;
   else
     return NULL;
 }

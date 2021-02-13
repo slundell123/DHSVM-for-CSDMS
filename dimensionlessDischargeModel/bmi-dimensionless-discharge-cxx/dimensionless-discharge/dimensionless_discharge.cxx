@@ -2,6 +2,7 @@
 #include <cstring>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "dimensionless_discharge.hxx"
 
 
@@ -44,6 +45,15 @@ dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], 
   return OK;
 }
 
+double dimensionlessDischarge::DimensionlessDischarge::GetDimensionlessDischarge(){
+  return this->dimensionlessDischarge;
+}
+
+double dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDischarge(){
+  this->dimensionlessDischarge = this->flux/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+  return this->dimensionlessDischarge;
+}
+
 void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
@@ -51,6 +61,8 @@ advance_in_time ()
   dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
       this->temp_z);
   this->time += this->dt;
+  this->dimensionlessDischarge = CalculateDimensionlessDischarge();
+  this->dimensionlessDischarge = 3;
   memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
 }
 
@@ -64,6 +76,8 @@ DimensionlessDischarge(std::string config_file)
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
+  this->dimensionlessDischarge = 0.0;
+  this->flux = 0.8;
 
   FILE * fp;
   double alpha = 1.;
@@ -134,6 +148,8 @@ DimensionlessDischarge()
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
+  this->dimensionlessDischarge = 0.0;
+  this->flux = 0.0;
 
   // heat values
   this->alpha = 1.;
