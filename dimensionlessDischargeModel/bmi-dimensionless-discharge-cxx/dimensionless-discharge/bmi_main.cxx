@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   }
 
   {
-    std::string var_name = "dimensionless_discharge";
+    std::string var_name = "plate_surface__temperature";
     int grid, rank, *shape;
     double *var = NULL;
     double time = 0.0;

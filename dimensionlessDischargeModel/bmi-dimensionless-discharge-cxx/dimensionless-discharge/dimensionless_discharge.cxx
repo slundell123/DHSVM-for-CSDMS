@@ -61,8 +61,8 @@ advance_in_time ()
   dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
       this->temp_z);
   this->time += this->dt;
-  this->dimensionlessDischarge = CalculateDimensionlessDischarge();
-  this->dimensionlessDischarge = 3;
+  //this->dimensionlessDischarge = CalculateDimensionlessDischarge();
+  this->dimensionlessDischarge += 3.0;
   memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
 }
 
@@ -76,7 +76,7 @@ DimensionlessDischarge(std::string config_file)
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
-  this->dimensionlessDischarge = 0.0;
+  this->dimensionlessDischarge = 1000.0;
   this->flux = 0.8;
 
   FILE * fp;
