@@ -13,6 +13,7 @@ int
 dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], double alpha,
     double dt, double ** out)
 {
+  
   {
     int i, j;
     const int top_row = shape[0] - 1;
@@ -41,8 +42,9 @@ dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], 
       for (j=1; j<top_col; j++)
         out[i][j] += z[i][j];
   }
-
+ 
   return OK;
+  
 }
 
 double dimensionlessDischarge::DimensionlessDischarge::GetDimensionlessDischarge(){
@@ -57,13 +59,13 @@ double dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDis
 void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
-  const int n_elements = this->shape[0] * this->shape[1];
-  dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
-      this->temp_z);
+  //const int n_elements = this->shape[0] * this->shape[1];
+  //dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
+  //    this->temp_z);
   this->time += this->dt;
   //this->dimensionlessDischarge = CalculateDimensionlessDischarge();
-  this->dimensionlessDischarge += 3.0;
-  memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
+  this->dimensionlessDischarge += 8.0;
+  //memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
 }
 
 
@@ -108,22 +110,26 @@ DimensionlessDischarge(std::string config_file)
 void dimensionlessDischarge::DimensionlessDischarge::
 _initialize_arrays(void)
 {
+  
   int i;
   const int n_y = this->shape[0];
   const int n_x = this->shape[1];
   const int len = n_x * n_y;
   double top_x = n_x - 1;
 
-  /* Allocate memory */
+  ///Allocate memory 
   this->temp_z = new double*[n_y];
   this->z = new double*[n_y];
 
   this->z[0] = new double[n_x * n_y];
   this->temp_z[0] = new double[n_x*n_y];
+
+  
   for (i=1; i<n_y; i++) {
     this->z[i] = this->z[i-1] + n_x;
     this->temp_z[i] = this->temp_z[i-1] + n_x;
   }
+
 
   for (i = 0; i < len; i++)
     this->z[0][i] = rand ()*1./RAND_MAX * top_x*top_x*.5 - top_x*top_x*.25;
@@ -135,8 +141,9 @@ _initialize_arrays(void)
     this->z[0][i] = 0.;
     this->z[n_y-1][i] = top_x*top_x*.25 - (i-top_x*.5) * (i-top_x*.5);
   }
-
+   
   memcpy (this->temp_z[0], this->z[0], sizeof (double)*n_x*n_y);
+  
 }
 
 
@@ -150,13 +157,14 @@ DimensionlessDischarge()
   this->d50 = 5.8;
   this->dimensionlessDischarge = 0.0;
   this->flux = 0.0;
-
+  
+  
   // heat values
   this->alpha = 1.;
-  this->t_end = 10.;
+  this->t_end = 11.;
   this->time = 0.;
   this->shape[0] = 10;
-  this->shape[1] = 20;
+  this->shape[1] = 2;
   this->spacing[0] = 1.;
   this->spacing[1] = 1.;
   this->origin[0] = 0.;
@@ -164,6 +172,7 @@ DimensionlessDischarge()
   this->dt = 1. / (4. * this->alpha);
 
   this->_initialize_arrays();
+  
 }
 
 

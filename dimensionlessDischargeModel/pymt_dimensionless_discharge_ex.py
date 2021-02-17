@@ -13,6 +13,22 @@ print(m.name)
 args = m.setup('.')
 m.initialize(*args)
 
+var_name = m.output_var_names[1]
+print('Variable: ',var_name)
+print(' - variable type:', m.var_type(var_name))
+print(' - units:', m.var_units(var_name))
+print(' - itemsize:', m.var_itemsize(var_name))
+print(' - nbytes:', m.var_nbytes(var_name))
+print(' - location:', m.var_location(var_name))
+print()
+print('Start time:', m.start_time)
+print('End time:', m.end_time)
+m.update()
+print("Value of: ", var_name)
+print(m.get_value(var_name))
+
+
+'''
 # List the model's exchange items.
 print('Number of input vars:', len(m.input_var_names))
 for var in m.input_var_names:
@@ -58,7 +74,7 @@ print('Update: current time:', m.time)
 # Advance the model until a later time.
 m.update_until(5.0)
 print('Update: current time:', m.time)
-
+'''
 # Finalize the model.
 m.finalize()
 print('Done.')

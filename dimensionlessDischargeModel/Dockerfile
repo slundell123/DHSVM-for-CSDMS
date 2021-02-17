@@ -43,10 +43,9 @@ RUN bmi-test pymt_dimensionless_discharge:DimensionlessDischargeBMI --config-fil
 
 RUN conda install -c conda-forge pymt
 
-# These are from the C example, but should also work for the C++ example.
-#WORKDIR /opt/babelizer/docs/source/examples
-#RUN cp info.yaml run.yaml parameters.yaml dimensionlessDischarge.txt /opt/pymt_dimensionless_discharge/meta/DimensionlessDischargeBMI
+
 
 WORKDIR /opt/test
 COPY pymt_dimensionless_discharge_ex.py ./
-RUN python pymt_dimensionless_discharge_ex.py
+COPY testingScript.py ./
+#RUN testingScript.py

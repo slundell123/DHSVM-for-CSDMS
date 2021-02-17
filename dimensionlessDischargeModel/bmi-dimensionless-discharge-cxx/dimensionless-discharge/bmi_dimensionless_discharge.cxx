@@ -351,7 +351,7 @@ SetValueAtIndices (std::string name, int * inds, int len, void *src)
 std::string BmiDimensionlessDischarge::
 GetComponentName()
 {
-  return "The 2D Dimensionless Discharge Equation";
+  return "The Dimensionless Discharge Equation";
 }
 
 
