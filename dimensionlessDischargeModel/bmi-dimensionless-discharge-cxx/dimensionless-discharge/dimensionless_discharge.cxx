@@ -47,24 +47,30 @@ dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], 
   
 }
 
-double dimensionlessDischarge::DimensionlessDischarge::GetDimensionlessDischarge(){
+double* dimensionlessDischarge::DimensionlessDischarge::GetDimensionlessDischarge(){
   return this->dimensionlessDischarge;
 }
 
-double dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDischarge(){
-  this->dimensionlessDischarge = this->flux/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+double* dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDischarge(int size){
+  for(int i = 0; i < size; i++){
+    this->dimensionlessDischarge[size] = this->flux/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+  }
   return this->dimensionlessDischarge;
 }
 
 void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
+  const int n_y = this->shape[0];
   //const int n_elements = this->shape[0] * this->shape[1];
   //dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
   //    this->temp_z);
   this->time += this->dt;
-  //this->dimensionlessDischarge = CalculateDimensionlessDischarge();
-  this->dimensionlessDischarge += 8.0;
+  //this->dimensionlessDischarge = CalculateDimensionlessDischarge(n_y);
+  for(int i = 0; i < n_y; i++){
+    this->dimensionlessDischarge[i] += 8.0;
+  }
+  
   //memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
 }
 
@@ -78,7 +84,7 @@ DimensionlessDischarge(std::string config_file)
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
-  this->dimensionlessDischarge = 1000.0;
+  //this->dimensionlessDischarge = 1000.0;
   this->flux = 0.8;
 
   FILE * fp;
@@ -120,9 +126,12 @@ _initialize_arrays(void)
   ///Allocate memory 
   this->temp_z = new double*[n_y];
   this->z = new double*[n_y];
+  this->dimensionlessDischarge = new double[n_y];
 
   this->z[0] = new double[n_x * n_y];
   this->temp_z[0] = new double[n_x*n_y];
+
+  
 
   
   for (i=1; i<n_y; i++) {
@@ -132,14 +141,20 @@ _initialize_arrays(void)
 
 
   for (i = 0; i < len; i++)
-    this->z[0][i] = rand ()*1./RAND_MAX * top_x*top_x*.5 - top_x*top_x*.25;
+    this->z[0][i] = 0;
   for (i = 0; i < n_y; i++) {
     this->z[i][0] = 0.;
     this->z[i][n_x-1] = 0.;
   }
+
   for (i = 0; i < n_x; i++) {
     this->z[0][i] = 0.;
-    this->z[n_y-1][i] = top_x*top_x*.25 - (i-top_x*.5) * (i-top_x*.5);
+    this->z[n_y-1][i] = 0;
+  }
+
+
+  for(int j = 0; j < n_y; j++){
+      this->dimensionlessDischarge[j] = 0;
   }
    
   memcpy (this->temp_z[0], this->z[0], sizeof (double)*n_x*n_y);
@@ -155,7 +170,6 @@ DimensionlessDischarge()
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
-  this->dimensionlessDischarge = 0.0;
   this->flux = 0.0;
   
   

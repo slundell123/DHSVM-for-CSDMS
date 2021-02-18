@@ -12,7 +12,7 @@ print(m.name)
 # Call setup, then initialize the model.
 args = m.setup('.')
 m.initialize(*args)
-
+print("variables: ", m.output_var_names)
 var_name = m.output_var_names[1]
 print('Variable: ',var_name)
 print(' - variable type:', m.var_type(var_name))
@@ -23,6 +23,10 @@ print(' - location:', m.var_location(var_name))
 print()
 print('Start time:', m.start_time)
 print('End time:', m.end_time)
+print("before update:")
+print("Value of: ", var_name)
+print(m.get_value(var_name))
+
 m.update()
 print("Value of: ", var_name)
 print(m.get_value(var_name))

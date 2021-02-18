@@ -63,6 +63,8 @@ GetVarGrid(std::string name)
     return 0;
   else if (name.compare("dimensionless_discharge") == 0)
     return 0;
+  else if (name.compare("flux") == 0)
+    return 0;
   else
     return -1;
 }
@@ -74,6 +76,8 @@ GetVarType(std::string name)
   if (name.compare("plate_surface__temperature") == 0)
     return "double";
   else if (name.compare("dimensionless_discharge") == 0)
+    return "double";
+    else if (name.compare("flux") == 0)
     return "double";
   else
     return "";
@@ -99,6 +103,8 @@ GetVarUnits(std::string name)
     return "meters";
   else if (name.compare("dimensionless_discharge") == 0)
     return "meters"; //Should be done, but it won't let me user none as a data type... 
+  else if (name.compare("flux") == 0)
+    return "meters";
   else
     return "";
 }
@@ -123,6 +129,8 @@ GetVarLocation(std::string name)
   if (name.compare("plate_surface__temperature") == 0)
     return "node";
   else if (name.compare("dimensionless_discharge") == 0)
+    return "node";
+    else if (name.compare("flux") == 0)
     return "node";
   else
     return "";
@@ -282,6 +290,8 @@ GetValuePtr (std::string name)
     return (void*)this->_model.z[0];
   else if (name.compare("dimensionless_discharge") == 0)
     return &this->_model.dimensionlessDischarge;
+  else if (name.compare("flux") == 0)
+    return &this->_model.flux;
   else
     return NULL;
 }
