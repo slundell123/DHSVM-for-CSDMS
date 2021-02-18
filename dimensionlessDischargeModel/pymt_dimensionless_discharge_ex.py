@@ -13,6 +13,7 @@ print(m.name)
 args = m.setup('.')
 m.initialize(*args)
 
+<<<<<<< HEAD
 var_name = m.output_var_names[1]
 print('Variable: ',var_name)
 print(' - variable type:', m.var_type(var_name))
@@ -29,6 +30,8 @@ print(m.get_value(var_name))
 
 
 '''
+=======
+>>>>>>> 6bbf1533957bfcc6c3b08f69ac68a46666632454
 # List the model's exchange items.
 print('Number of input vars:', len(m.input_var_names))
 for var in m.input_var_names:
@@ -74,7 +77,11 @@ print('Update: current time:', m.time)
 # Advance the model until a later time.
 m.update_until(5.0)
 print('Update: current time:', m.time)
+<<<<<<< HEAD
 '''
+=======
+
+>>>>>>> 6bbf1533957bfcc6c3b08f69ac68a46666632454
 # Finalize the model.
 m.finalize()
 print('Done.')

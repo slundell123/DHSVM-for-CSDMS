@@ -91,6 +91,8 @@ GetVarItemsize(std::string name)
     return sizeof(double);
   else if (name.compare("dimensionless_discharge") == 0)
     return sizeof(double);
+  else if (name.compare("dimensionless_discharge") == 0)
+    return sizeof(double);
   else
     return 0;
 }
