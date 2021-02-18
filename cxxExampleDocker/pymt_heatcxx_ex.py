@@ -2,9 +2,6 @@
 import numpy as np
 from pymt.models import HeatBMI
 
-#help(HeatBMI)
-
-
 # Instantiate the component and get its name.
 m = HeatBMI()
 print(m.name)
