@@ -19,8 +19,10 @@ namespace dimensionlessDischarge {
       // Input Values for dimensionless discharge
       double soilDensity;
       double d50;
-      double flux;
+      double dimensionless_flux;
       double *dimensionlessDischarge;
+      int dimensionlessDischargeShape[2];
+      int fluxShape[2];
 
 
 

@@ -53,7 +53,7 @@ double* dimensionlessDischarge::DimensionlessDischarge::GetDimensionlessDischarg
 
 double* dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDischarge(int size){
   for(int i = 0; i < size; i++){
-    this->dimensionlessDischarge[size] = this->flux/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+    this->dimensionlessDischarge[size] = this->dimensionless_flux/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
   }
   return this->dimensionlessDischarge;
 }
@@ -85,7 +85,7 @@ DimensionlessDischarge(std::string config_file)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
   //this->dimensionlessDischarge = 1000.0;
-  this->flux = 0.8;
+  this->dimensionless_flux = 0.8;
 
   FILE * fp;
   double alpha = 1.;
@@ -170,7 +170,11 @@ DimensionlessDischarge()
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
-  this->flux = 0.0;
+  this->dimensionless_flux = 0.0;
+  this->dimensionlessDischargeShape[0] = 1;
+  this->dimensionlessDischargeShape[1] = 1;
+  this->fluxShape[0] = 1;
+  this->fluxShape[1] = 1;
   
   
   // heat values

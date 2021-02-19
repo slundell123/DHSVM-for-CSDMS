@@ -62,9 +62,9 @@ GetVarGrid(std::string name)
   if (name.compare("plate_surface__temperature") == 0)
     return 0;
   else if (name.compare("dimensionless_discharge") == 0)
-    return 0;
+    return 1;
   else if (name.compare("flux") == 0)
-    return 0;
+    return 2;
   else
     return -1;
 }
@@ -184,6 +184,10 @@ GetGridSize(const int grid)
 {
   if (grid == 0)
     return this->_model.shape[0] * this->_model.shape[1];
+  if (grid == 1)
+    return this->_model.dimensionlessDischargeShape[0] * this->_model.dimensionlessDischargeShape[1];
+  if (grid == 2)
+    return this->_model.fluxShape[0] * this->_model.fluxShape[1];
   else
     return -1;
 }
@@ -293,7 +297,7 @@ GetValuePtr (std::string name)
   else if (name.compare("dimensionless_discharge") == 0)
     return &this->_model.dimensionlessDischarge;
   else if (name.compare("flux") == 0)
-    return &this->_model.flux;
+    return &this->_model.dimensionless_flux;
   else
     return NULL;
 }
