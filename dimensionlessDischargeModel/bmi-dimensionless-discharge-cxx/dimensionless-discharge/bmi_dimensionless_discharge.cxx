@@ -63,7 +63,7 @@ GetVarGrid(std::string name)
     return 0;
   else if (name.compare("dimensionless_discharge") == 0)
     return 1;
-  else if (name.compare("flux") == 0)
+  else if (name.compare("dimensionless_flux") == 0)
     return 2;
   else
     return -1;
@@ -77,7 +77,7 @@ GetVarType(std::string name)
     return "double";
   else if (name.compare("dimensionless_discharge") == 0)
     return "double";
-    else if (name.compare("flux") == 0)
+    else if (name.compare("dimensionless_flux") == 0)
     return "double";
   else
     return "";
@@ -91,7 +91,7 @@ GetVarItemsize(std::string name)
     return sizeof(double);
   else if (name.compare("dimensionless_discharge") == 0)
     return sizeof(double);
-  else if (name.compare("dimensionless_discharge") == 0)
+  else if (name.compare("dimensionless_flux") == 0)
     return sizeof(double);
   else
     return 0;
@@ -105,7 +105,7 @@ GetVarUnits(std::string name)
     return "meters";
   else if (name.compare("dimensionless_discharge") == 0)
     return "meters"; //Should be done, but it won't let me user none as a data type... 
-  else if (name.compare("flux") == 0)
+  else if (name.compare("dimensionless_flux") == 0)
     return "meters";
   else
     return "";
@@ -132,7 +132,7 @@ GetVarLocation(std::string name)
     return "node";
   else if (name.compare("dimensionless_discharge") == 0)
     return "node";
-    else if (name.compare("flux") == 0)
+    else if (name.compare("dimensionless_flux") == 0)
     return "node";
   else
     return "";

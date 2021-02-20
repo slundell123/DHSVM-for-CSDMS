@@ -61,13 +61,13 @@ double* dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDi
 void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
-  const int n_y = this->shape[0];
+  //const int n_y = this->shape[0];
   //const int n_elements = this->shape[0] * this->shape[1];
   //dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
   //    this->temp_z);
   this->time += this->dt;
   //this->dimensionlessDischarge = CalculateDimensionlessDischarge(n_y);
-  for(int i = 0; i < this->dimensionlessDischargeShape[0]; i++){
+  for(int i = 0; i < 1; i++){
      this->dimensionlessDischarge[i] += 8.0;
   }
  
@@ -215,7 +215,7 @@ DimensionlessDischarge()
   this->t_end = 11.;
   this->time = 0.;
   this->shape[0] = 10;
-  this->shape[1] = 2;
+  this->shape[1] = 20;
   this->spacing[0] = 1.;
   this->spacing[1] = 1.;
   this->origin[0] = 0.;
