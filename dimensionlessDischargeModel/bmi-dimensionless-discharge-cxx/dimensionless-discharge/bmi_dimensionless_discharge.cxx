@@ -166,6 +166,14 @@ GetGridOrigin (const int grid, double *origin)
     origin[0] = this->_model.origin[0];
     origin[1] = this->_model.origin[1];
   }
+  if (grid == 1) {
+    origin[0] = this->_model.origin[0];
+    origin[1] = this->_model.origin[1];
+  }
+  if (grid == 2) {
+    origin[0] = this->_model.origin[0];
+    origin[1] = this->_model.origin[1];
+  }
 }
 
 
@@ -173,6 +181,10 @@ int BmiDimensionlessDischarge::
 GetGridRank(const int grid)
 {
   if (grid == 0)
+    return 2;
+  if (grid == 1)
+    return 2;
+  if (grid == 2)
     return 2;
   else
     return -1;
@@ -185,9 +197,9 @@ GetGridSize(const int grid)
   if (grid == 0)
     return this->_model.shape[0] * this->_model.shape[1];
   if (grid == 1)
-    return this->_model.dimensionlessDischargeShape[0] * this->_model.dimensionlessDischargeShape[1];
+    return this->_model.dimensionlessDischargeShape[0];
   if (grid == 2)
-    return this->_model.fluxShape[0] * this->_model.fluxShape[1];
+    return this->_model.fluxShape[0];
   else
     return -1;
 }
@@ -197,6 +209,10 @@ std::string BmiDimensionlessDischarge::
 GetGridType(const int grid)
 {
   if (grid == 0)
+    return "uniform_rectilinear";
+  if (grid == 1)
+    return "uniform_rectilinear";
+  if (grid == 2)
     return "uniform_rectilinear";
   else
     return "";
@@ -229,6 +245,10 @@ GetGridNodeCount(const int grid)
 {
   if (grid == 0)
     return this->_model.shape[0] * this->_model.shape[1];
+  else if (grid == 1)
+    return this->_model.dimensionlessDischargeShape[0];
+  else if (grid == 2)
+    return this->_model.fluxShape[0];
   else
     return -1;
 }
@@ -295,9 +315,9 @@ GetValuePtr (std::string name)
   if (name.compare("plate_surface__temperature") == 0)
     return (void*)this->_model.z[0];
   else if (name.compare("dimensionless_discharge") == 0)
-    return &this->_model.dimensionlessDischarge;
-  else if (name.compare("flux") == 0)
-    return &this->_model.dimensionless_flux;
+    return this->_model.dimensionlessDischarge;
+  else if (name.compare("dimensionless_flux") == 0)
+    return this->_model.dimensionless_flux;
   else
     return NULL;
 }

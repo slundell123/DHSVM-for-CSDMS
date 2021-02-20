@@ -21,8 +21,8 @@ class BmiDimensionlessDischarge : public bmi::Bmi {
       this->output_var_names[0] = "plate_surface__temperature";
       this->input_var_names[1] = "dimensionless_discharge";
       this->output_var_names[1] = "dimensionless_discharge";
-      this->input_var_names[2] = "flux";
-      this->output_var_names[2] = "flux";
+      this->input_var_names[2] = "dimensionless_flux";
+      this->output_var_names[2] = "dimensionless_flux";
     };
 
     void Initialize(std::string config_file);
