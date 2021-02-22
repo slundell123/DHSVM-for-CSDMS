@@ -7,8 +7,8 @@ namespace dimensionlessDischarge {
       double alpha;
 
       double **temp_z;
-      double *temp_dimensionlessDischarge;
-      double *temp_dimensionless_flux;
+      double **temp_dimensionlessDischarge;
+      double **temp_dimensionless_flux;
 
       // Constant Values for dimensionless discharge
       double gravityConst;
@@ -21,8 +21,8 @@ namespace dimensionlessDischarge {
       // Input Values for dimensionless discharge
       double soilDensity;
       double d50;
-      double* dimensionless_flux;
-      double* dimensionlessDischarge;
+      double** dimensionless_flux;
+      double** dimensionlessDischarge;
       int dimensionlessDischargeShape[2];
       int fluxShape[2];
 
@@ -38,8 +38,8 @@ namespace dimensionlessDischarge {
 
 
       DimensionlessDischarge();
-      double *CalculateDimensionlessDischarge(int);
-      double *GetDimensionlessDischarge();
+      double **CalculateDimensionlessDischarge(int);
+      double **GetDimensionlessDischarge();
       DimensionlessDischarge(std::string config_file);
       ~DimensionlessDischarge();
       void advance_in_time ();

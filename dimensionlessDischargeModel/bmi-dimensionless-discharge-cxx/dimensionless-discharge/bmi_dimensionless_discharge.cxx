@@ -146,6 +146,14 @@ GetGridShape(const int grid, int *shape)
     shape[0] = this->_model.shape[0];
     shape[1] = this->_model.shape[1];
   }
+  if (grid == 1) {
+    shape[0] = this->_model.shape[0];
+    shape[1] = this->_model.shape[1];
+  }
+  if (grid == 2) {
+    shape[0] = this->_model.shape[0];
+    shape[1] = this->_model.shape[1];
+  }
 }
 
 
@@ -153,6 +161,14 @@ void BmiDimensionlessDischarge::
 GetGridSpacing (const int grid, double * spacing)
 {
   if (grid == 0) {
+    spacing[0] = this->_model.spacing[0];
+    spacing[1] = this->_model.spacing[1];
+  }
+  if (grid == 1) {
+    spacing[0] = this->_model.spacing[0];
+    spacing[1] = this->_model.spacing[1];
+  }
+  if (grid == 2) {
     spacing[0] = this->_model.spacing[0];
     spacing[1] = this->_model.spacing[1];
   }
@@ -197,9 +213,9 @@ GetGridSize(const int grid)
   if (grid == 0)
     return this->_model.shape[0] * this->_model.shape[1];
   if (grid == 1)
-    return this->_model.dimensionlessDischargeShape[0];
+    return this->_model.dimensionlessDischargeShape[0]*_model.dimensionlessDischargeShape[1];
   if (grid == 2)
-    return this->_model.fluxShape[0];
+    return this->_model.fluxShape[0]*_model.fluxShape[1];
   else
     return -1;
 }
@@ -315,9 +331,9 @@ GetValuePtr (std::string name)
   if (name.compare("plate_surface__temperature") == 0)
     return (void*)this->_model.z[0];
   else if (name.compare("dimensionless_discharge") == 0)
-    return this->_model.dimensionlessDischarge;
+    return (void*)this->_model.dimensionlessDischarge[0];
   else if (name.compare("dimensionless_flux") == 0)
-    return this->_model.dimensionless_flux;
+    return (void*)this->_model.dimensionless_flux[0];
   else
     return NULL;
 }
