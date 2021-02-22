@@ -38,7 +38,7 @@ namespace dimensionlessDischarge {
 
 
       DimensionlessDischarge();
-      double **CalculateDimensionlessDischarge(int);
+      double **CalculateDimensionlessDischarge();
       double **GetDimensionlessDischarge();
       DimensionlessDischarge(std::string config_file);
       ~DimensionlessDischarge();

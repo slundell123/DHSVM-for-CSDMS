@@ -47,13 +47,49 @@ dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], 
   
 }
 
+int
+calculateDimensionlessDischarge (double ** dimensionlessDischarge, int shape[2], double ** out, double ** flux, double d50, double soilD, double waterD, double g)
+{
+  
+  {
+    int i, j;
+    const int top_row = shape[0];
+    const int top_col = shape[1];
+
+    for (i=1; i<top_row; i++)
+      for (j=1; j<top_col; j++) {
+        out[i][j] = flux[i][j];///sqrt(((soilD-waterD)/waterD)*g*d50);
+
+      }
+  /*
+    for (j=0; j<shape[1]; j++) {
+        out[0][j] = 0.;
+        out[top_row][j] = 0.;
+    }
+    for (i=0; i<shape[0]; i++) {
+        out[i][0] = 0.;
+        out[i][top_col] = 0.;
+    }
+
+    for (i=1; i<top_row; i++)
+      for (j=1; j<top_col; j++)
+        out[i][j] += dimensionlessDischarge[i][j];
+        */
+  }
+ 
+  return OK;
+  
+}
+
 double** dimensionlessDischarge::DimensionlessDischarge::GetDimensionlessDischarge(){
   return this->dimensionlessDischarge;
 }
 
-double** dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDischarge(int size){
+double** dimensionlessDischarge::DimensionlessDischarge::CalculateDimensionlessDischarge(){
   for(int i = 0; i < this->dimensionlessDischargeShape[0]; i++){
-    this->dimensionlessDischarge[0][i] = this->dimensionless_flux[0][i]/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+    for(int j = 0; j < this->dimensionlessDischargeShape[1]; j++){
+      this->dimensionlessDischarge[i][j] = this->dimensionless_flux[i][j];///sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+    }
   }
   return this->dimensionlessDischarge;
 }
@@ -65,12 +101,21 @@ advance_in_time ()
   //const int n_elements = this->shape[0] * this->shape[1];
   //dimensionless_discharge_solve_2d (this->z, this->shape, this->spacing, this->alpha, this->dt,
   //    this->temp_z);
+  
+  //this->dimensionlessDischarge = CalculateDimensionlessDischarge();
+  /*
+  for(int i = 0; i < this->dimensionlessDischargeShape[0]; i++){
+    for(int j = 0; j < this->dimensionlessDischargeShape[1]; j++){
+      this->dimensionlessDischarge[i][j]+=i+j;
+      //this->dimensionlessDischarge[i][j] = this->dimensionless_flux[i][j]/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+    }
+  }
+  */
+  //this->dimensionlessDischarge[0][0] += 8.0;
+  calculateDimensionlessDischarge(this->dimensionlessDischarge, this->dimensionlessDischargeShape, this->temp_dimensionlessDischarge, this->dimensionless_flux, this->d50, this->soilDensity, this->waterDensityConst, this->gravityConst);
   this->time += this->dt;
-  //this->dimensionlessDischarge = CalculateDimensionlessDischarge(n_y);
 
-  this->dimensionlessDischarge[0][0] += 8.0;
-
-  //memcpy (this->dimensionlessDischarge[0], this->temp_dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape[1]*dimensionlessDischargeShape[0]);
+  memcpy (this->dimensionlessDischarge[0], this->temp_dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape[1]*dimensionlessDischargeShape[0]);
   
   //memcpy (this->z[0], this->temp_z[0], sizeof (double) * n_elements);
 }
@@ -175,84 +220,19 @@ _initialize_arrays(void)
   }
 
   for (i = 0; i < len; i++)
-    this->z[0][i] = 0;
+    this->z[0][i] = 1.1;
+  // randomly set value in flux between 0 and 1 to try out the dimensionless discharge update function
   for (i = 0; i < ddLen; i++)
-    this->dimensionless_flux[0][i] = 0;
+    this->dimensionless_flux[0][i] = std::rand();
   for (i = 0; i < dfLen; i++)
-    this->dimensionlessDischarge[0][i] = 0;
+    this->dimensionlessDischarge[0][i] = 1;
 
-  for (i = 0; i < n_y; i++) {
-    this->z[i][0] = 0.;
-    this->z[i][n_x-1] = 0.;
-  }
-  for (i = 0; i < df_y; i++) {
-    this->dimensionless_flux[i][0] = 0.;
-    this->dimensionless_flux[i][df_x-1] = 0.;
-  }
-  for (i = 0; i < dd_y; i++) {
-    this->dimensionlessDischarge[i][0] = 0.;
-    this->dimensionlessDischarge[i][dd_x-1] = 0.;
-  }
 
-  for (i = 0; i < n_x; i++) {
-    this->z[0][i] = 0.;
-    this->z[n_y-1][i] = 0;
-  }
-  for (i = 0; i < dd_x; i++) {
-    this->dimensionlessDischarge[0][i] = 0.;
-    this->dimensionlessDischarge[dd_y-1][i] = 0;
-  }
-  for (i = 0; i < df_x; i++) {
-    this->dimensionless_flux[0][i] = 0.;
-    this->dimensionless_flux[df_y-1][i] = 0;
-  }
-   
+ 
 
   memcpy (this->temp_z[0], this->z[0], sizeof (double)*n_x*n_y);
   memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double)*dd_x*dd_y);
   memcpy (this->temp_dimensionless_flux[0], this->dimensionless_flux[0], sizeof (double)*df_x*df_y);
-
-
-  /*
-  // For dimensionlessDischarge
-  const int yLengthOfVectorDD = dimensionlessDischargeShape[0]; // y value
-  const int xLengthOfVectorDD = this->dimensionlessDischargeShape[1]; // x value
-
-  ///Allocate memory 
-  this->temp_dimensionlessDischarge = new double*[yLengthOfVectorDD];
-  this->dimensionlessDischarge = new double*[yLengthOfVectorDD];
-
-  this->dimensionlessDischarge[0] = new double[xLengthOfVectorDD * yLengthOfVectorDD];
-  this->temp_dimensionlessDischarge[0] = new double[xLengthOfVectorDD * yLengthOfVectorDD];
-
-
-  for (i = 0; i < yLengthOfVectorDD; i++) {
-    for (int j = 0; j < xLengthOfVectorDD; j++){
-      this->dimensionlessDischarge[i][j] = 10.;
-    }
-  }
-   
-  memcpy (this->temp_dimensionlessDischarge, this->dimensionlessDischarge, sizeof (double)*yLengthOfVectorDD*xLengthOfVectorDD);
-
-  // For dimensionless flux 
-  const int ylengthOfVectorDF = this->fluxShape[0];
-  const int xlengthOfVectorDF = this->fluxShape[1];
-
-  ///Allocate memory 
-  this->temp_dimensionless_flux = new double*[ylengthOfVectorDF];
-  this->dimensionless_flux = new double*[ylengthOfVectorDF];
-
-  this->dimensionless_flux[0] = new double[xlengthOfVectorDF * ylengthOfVectorDF];
-  this->temp_dimensionless_flux[0] = new double[xlengthOfVectorDF * ylengthOfVectorDF];
-
-  for (i = 0; i < ylengthOfVectorDF; i++) {
-    for (int j = 0; j < xlengthOfVectorDF; j++){
-      this->dimensionless_flux[i][j] = 100.;
-    }
-  }
-
-  memcpy (this->temp_dimensionless_flux, this->dimensionless_flux, sizeof (double)*xlengthOfVectorDF * ylengthOfVectorDF);
-  */
 }
 
 
