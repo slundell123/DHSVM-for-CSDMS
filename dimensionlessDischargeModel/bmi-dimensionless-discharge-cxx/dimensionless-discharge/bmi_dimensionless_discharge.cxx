@@ -147,12 +147,12 @@ GetGridShape(const int grid, int *shape)
     shape[1] = this->_model.shape[1];
   }
   if (grid == 1) {
-    shape[0] = this->_model.shape[0];
-    shape[1] = this->_model.shape[1];
+    shape[0] = 1;
+    shape[1] = this->_model.dimensionlessDischargeShape;
   }
   if (grid == 2) {
-    shape[0] = this->_model.shape[0];
-    shape[1] = this->_model.shape[1];
+    shape[0] = 1;
+    shape[1] = this->_model.fluxShape;
   }
 }
 
@@ -199,9 +199,9 @@ GetGridRank(const int grid)
   if (grid == 0)
     return 2;
   if (grid == 1)
-    return 2;
+    return 1;
   if (grid == 2)
-    return 2;
+    return 1;
   else
     return -1;
 }
@@ -213,9 +213,9 @@ GetGridSize(const int grid)
   if (grid == 0)
     return this->_model.shape[0] * this->_model.shape[1];
   if (grid == 1)
-    return this->_model.dimensionlessDischargeShape[0]*_model.dimensionlessDischargeShape[1];
+    return this->_model.dimensionlessDischargeShape;
   if (grid == 2)
-    return this->_model.fluxShape[0]*_model.fluxShape[1];
+    return this->_model.fluxShape;
   else
     return -1;
 }
@@ -227,9 +227,9 @@ GetGridType(const int grid)
   if (grid == 0)
     return "uniform_rectilinear";
   if (grid == 1)
-    return "uniform_rectilinear";
+    return "vector";
   if (grid == 2)
-    return "uniform_rectilinear";
+    return "vector";
   else
     return "";
 }
@@ -262,9 +262,9 @@ GetGridNodeCount(const int grid)
   if (grid == 0)
     return this->_model.shape[0] * this->_model.shape[1];
   else if (grid == 1)
-    return this->_model.dimensionlessDischargeShape[0];
+    return this->_model.dimensionlessDischargeShape;
   else if (grid == 2)
-    return this->_model.fluxShape[0];
+    return this->_model.fluxShape;
   else
     return -1;
 }

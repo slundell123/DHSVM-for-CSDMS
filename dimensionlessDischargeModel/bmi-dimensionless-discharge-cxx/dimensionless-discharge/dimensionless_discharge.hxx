@@ -23,8 +23,8 @@ namespace dimensionlessDischarge {
       double d50;
       double** dimensionless_flux;
       double** dimensionlessDischarge;
-      int dimensionlessDischargeShape[2];
-      int fluxShape[2];
+      int dimensionlessDischargeShape;
+      int fluxShape;
 
 
 
@@ -38,9 +38,8 @@ namespace dimensionlessDischarge {
 
 
       DimensionlessDischarge();
-      double **CalculateDimensionlessDischarge();
-      double **GetDimensionlessDischarge();
       DimensionlessDischarge(std::string config_file);
+      DimensionlessDischarge(int vectorSize);
       ~DimensionlessDischarge();
       void advance_in_time ();
   };
