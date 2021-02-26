@@ -39,7 +39,7 @@ RUN ln -s ${SYSROOT}/usr/lib64/libc_nonshared.a /usr/lib64/libc_nonshared.a
 RUN make install
 
 WORKDIR /opt/test
-RUN bmi-test pymt_dimensionless_discharge:DimensionlessDischargeBMI --config-file=../babelizer/tests/test_cxx/config.txt --root-dir=. -vvv
+#RUN bmi-test pymt_dimensionless_discharge:DimensionlessDischargeBMI --config-file=../babelizer/tests/test_cxx/config.txt --root-dir=. -vvv
 
 RUN conda install -c conda-forge pymt
 

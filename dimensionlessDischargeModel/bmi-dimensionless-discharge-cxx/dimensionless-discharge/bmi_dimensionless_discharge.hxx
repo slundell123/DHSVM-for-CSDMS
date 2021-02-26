@@ -23,6 +23,8 @@ class BmiDimensionlessDischarge : public bmi::Bmi {
       this->output_var_names[1] = "dimensionless_discharge";
       this->input_var_names[2] = "dimensionless_flux";
       this->output_var_names[2] = "dimensionless_flux";
+      this->input_var_names[3] = "dimensionless_d50_vector";
+      this->output_var_names[3] = "dimensionless_d50_vector";
     };
 
     void Initialize(std::string config_file);
@@ -79,11 +81,11 @@ class BmiDimensionlessDischarge : public bmi::Bmi {
 
   private:
     dimensionlessDischarge::DimensionlessDischarge _model;
-    static const int input_var_name_count = 3;
-    static const int output_var_name_count = 3;
+    static const int input_var_name_count = 4;
+    static const int output_var_name_count = 4;
 
-    std::string input_var_names[3];
-    std::string output_var_names[3];
+    std::string input_var_names[4];
+    std::string output_var_names[4];
 };
 
 #endif

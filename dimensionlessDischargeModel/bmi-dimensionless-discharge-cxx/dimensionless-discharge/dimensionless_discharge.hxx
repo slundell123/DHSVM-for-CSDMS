@@ -13,6 +13,7 @@ namespace dimensionlessDischarge {
       // Constant Values for dimensionless discharge
       double gravityConst;
       double waterDensityConst;
+      bool d50VectorType;
 
 
       void _initialize_arrays(void);
@@ -23,6 +24,9 @@ namespace dimensionlessDischarge {
       double d50;
       double** dimensionless_flux;
       double** dimensionlessDischarge;
+      double** d50Vector;
+      double** streamSegmentIDVector;
+      int vectorShapeDimensionlessDischarge; // shape of all vectors 
       int dimensionlessDischargeShape;
       int fluxShape;
 

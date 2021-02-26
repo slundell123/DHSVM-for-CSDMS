@@ -85,9 +85,9 @@ void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
   this->time += this->dt;
-  for(int j = 0; j < this->dimensionlessDischargeShape; j++){
-    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+  for(int j = 0; j < this->vectorShapeDimensionlessDischarge; j++){
     
+    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
   }
 
   memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape);
@@ -103,6 +103,7 @@ DimensionlessDischarge(std::string config_file)
   this->waterDensityConst = 997.; //(kg/m^2)
   this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
+  this->d50VectorType = false;
   //this->dimensionlessDischarge = 1000.0;
 
   FILE * fp;
@@ -129,19 +130,21 @@ DimensionlessDischarge(std::string config_file)
 
   this->dimensionlessDischargeShape = 10;
   this->fluxShape = 10;
+  this->vectorShapeDimensionlessDischarge = 10;
 
   this->_initialize_arrays();
 }
 
-dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vectorSize){
+dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vectorShape){
   // dimensionless Discharge variable initialization
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 997.; //(kg/m^3)
   this->soilDensity = 1330; //(kg/m^3)
   this->d50 = 5.8; //(m?)
-  this->dimensionlessDischargeShape = vectorSize;
-  this->fluxShape = vectorSize;
-  
+  this->dimensionlessDischargeShape = vectorShape; //(int)
+  this->fluxShape = vectorShape; //(int)
+  this->vectorShapeDimensionlessDischarge = vectorShape; //(int)
+  this->d50VectorType = false;
   
   // heat values
   this->alpha = 1.;
@@ -170,12 +173,12 @@ _initialize_arrays(void)
   double top_x = n_x - 1;
 
   const int dd_y = 1;
-  const int dd_x = this->dimensionlessDischargeShape;
+  const int dd_x = this->vectorShapeDimensionlessDischarge;
   const int ddLen = dd_x * dd_y;
   double ddTop_x = dd_x - 1;
 
   const int df_y = 1;
-  const int df_x = this->fluxShape;
+  const int df_x = this->vectorShapeDimensionlessDischarge;
   const int dfLen = dd_x * dd_y;
   double dfTop_x = dd_x - 1;
 
@@ -224,6 +227,18 @@ _initialize_arrays(void)
     this->dimensionlessDischarge[0][i] = 1;
 
 
+  // D50 vector 
+  if(this->d50VectorType == true){
+    this->d50Vector = new double*[dd_y];
+    this->d50Vector[0] = new double[dd_x * dd_y];
+
+    for (i=1; i<dd_y; i++) {
+      this->d50Vector[i] = this->z[i-1] + n_x;
+    }
+    for (i = 0; i < ddLen; i++)
+      this->d50Vector[0][i] = 0;
+  }
+
  
 
   memcpy (this->temp_z[0], this->z[0], sizeof (double)*n_x*n_y);
@@ -242,7 +257,8 @@ DimensionlessDischarge()
   this->d50 = 5.8; //(m?)
   this->dimensionlessDischargeShape = 10;
   this->fluxShape = 10;
-  
+  this->vectorShapeDimensionlessDischarge = 10;
+  this->d50VectorType = false;
   
   // heat values
   this->alpha = 1.;
