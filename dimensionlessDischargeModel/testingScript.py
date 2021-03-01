@@ -12,18 +12,19 @@ print(m.name)
 # Call setup, then initialize the model.
 args = m.setup('.')
 m.initialize(*args)
-print("variables: ", m.output_var_names)
-var_name = m.output_var_names[1]
+
 print("before update:")
-print("Value of: ", m.output_var_names[2])
-print(m.get_value(m.output_var_names[2]))
-print("Value of: ", var_name)
-print(m.get_value(var_name))
+for i in range(len(m.output_var_names)-1):
+    print("Value of: ", m.output_var_names[i+1])
+    print(m.get_value(m.output_var_names[i+1]))
+
 print("updating...")
 
 m.update()
-print("Value of: ", var_name)
-print(m.get_value(var_name))
+
+for i in range(len(m.output_var_names)-1):
+    print("Value of: ", m.output_var_names[i+1])
+    print(m.get_value(m.output_var_names[i+1]))
 
 # Finalize the model.
 m.finalize()

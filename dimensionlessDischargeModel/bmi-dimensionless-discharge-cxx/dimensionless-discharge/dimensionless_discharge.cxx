@@ -61,20 +61,6 @@ calculateDimensionlessDischarge (double ** dimensionlessDischarge, int shape, do
         out[i][j] = flux[i][j];///sqrt(((soilD-waterD)/waterD)*g*d50);
 
       }
-  /*
-    for (j=0; j<shape[1]; j++) {
-        out[0][j] = 0.;
-        out[top_row][j] = 0.;
-    }
-    for (i=0; i<shape[0]; i++) {
-        out[i][0] = 0.;
-        out[i][top_col] = 0.;
-    }
-
-    for (i=1; i<top_row; i++)
-      for (j=1; j<top_col; j++)
-        out[i][j] += dimensionlessDischarge[i][j];
-        */
   }
  
   return OK;
@@ -222,22 +208,27 @@ _initialize_arrays(void)
     this->z[0][i] = 1.1;
   // randomly set value in flux between 0 and 1 to try out the dimensionless discharge update function
   for (i = 0; i < ddLen; i++)
-    this->dimensionless_flux[0][i] = std::rand();
+    this->dimensionless_flux[0][i] = std::rand()/RAND_MAX;
   for (i = 0; i < dfLen; i++)
     this->dimensionlessDischarge[0][i] = 1;
 
 
   // D50 vector 
-  if(this->d50VectorType == true){
-    this->d50Vector = new double*[dd_y];
-    this->d50Vector[0] = new double[dd_x * dd_y];
+  this->d50Vector = new double*[dd_y];
+  this->d50Vector[0] = new double[dd_x * dd_y];
 
-    for (i=1; i<dd_y; i++) {
-      this->d50Vector[i] = this->z[i-1] + n_x;
-    }
-    for (i = 0; i < ddLen; i++)
-      this->d50Vector[0][i] = 0;
+  for (i = 0; i < ddLen; i++)
+    this->d50Vector[0][i] = 0;
+  
+  // Stream Segment ID vector 
+  
+  this->streamSegmentIDVector = new int*[dd_y];
+  this->streamSegmentIDVector[0] = new int[dd_x * dd_y];
+
+  for (i = 0; i < ddLen; i++) {
+    this->streamSegmentIDVector[0][i] = 0;
   }
+
 
  
 

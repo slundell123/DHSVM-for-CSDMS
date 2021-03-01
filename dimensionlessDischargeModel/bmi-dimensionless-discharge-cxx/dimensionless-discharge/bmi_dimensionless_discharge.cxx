@@ -67,6 +67,10 @@ GetVarGrid(std::string name)
     return 2;
   else if (name.compare("dimensionless_d50_vector") == 0)
     return 3;
+  else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
+    return 4;
+  else if (name.compare("soil_density") == 0)
+    return 5;
   else
     return -1;
 }
@@ -82,6 +86,10 @@ GetVarType(std::string name)
   else if (name.compare("dimensionless_flux") == 0)
     return "double";
   else if (name.compare("dimensionless_d50_vector") == 0)
+    return "double";
+  else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
+    return "int";
+   else if (name.compare("soil_density") == 0)
     return "double";
   else
     return "";
@@ -99,6 +107,10 @@ GetVarItemsize(std::string name)
     return sizeof(double);
   else if (name.compare("dimensionless_d50_vector") == 0)
     return sizeof(double);
+  else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
+    return sizeof(int);
+  else if (name.compare("soil_density") == 0)
+    return sizeof(double);
   else
     return 0;
 }
@@ -110,11 +122,15 @@ GetVarUnits(std::string name)
   if (name.compare("plate_surface__temperature") == 0)
     return "meters";
   else if (name.compare("dimensionless_discharge") == 0)
-    return "meters"; //Should be done, but it won't let me user none as a data type... 
+    return "meters"; //Should be none, but it won't let me user none as a data type... 
   else if (name.compare("dimensionless_flux") == 0)
     return "meters";
   else if (name.compare("dimensionless_d50_vector") == 0)
-    return "meters";
+    return "meters"; 
+  else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
+    return "meters"; //Should be none
+  else if (name.compare("soil_density") == 0)
+    return "meters"; // should be (g/cm^2)
   else
     return "";
 }
@@ -144,6 +160,10 @@ GetVarLocation(std::string name)
     return "node";
   else if (name.compare("dimensionless_d50_vector") == 0)
     return "node";
+  else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
+    return "node";
+  else if (name.compare("soil_density") == 0)
+    return "node";
   else
     return "";
 }
@@ -168,6 +188,14 @@ GetGridShape(const int grid, int *shape)
     shape[0] = 1;
     shape[1] = this->_model.vectorShapeDimensionlessDischarge;
   }
+  if (grid == 4) {
+    shape[0] = 1;
+    shape[1] = this->_model.vectorShapeDimensionlessDischarge;
+  }
+  if (grid == 4) {
+    shape[0] = 1;
+    shape[1] = 1;
+  }
 }
 
 
@@ -186,9 +214,13 @@ GetGridSpacing (const int grid, double * spacing)
     spacing[0] = this->_model.spacing[0];
     spacing[1] = this->_model.spacing[1];
   }
-  if (grid == 3) {
+  if (grid == 3 || grid == 4 ) {
     spacing[0] = this->_model.spacing[0];
     spacing[1] = this->_model.spacing[1];
+  }
+  if (grid == 5) {
+    spacing[0] = 0;
+    spacing[1] = 0;
   }
 }
 
@@ -208,9 +240,13 @@ GetGridOrigin (const int grid, double *origin)
     origin[0] = this->_model.origin[0];
     origin[1] = this->_model.origin[1];
   }
-  if (grid == 3) {
+  if (grid == 3 || grid == 4) {
     origin[0] = this->_model.origin[0];
     origin[1] = this->_model.origin[1];
+  }
+  if (grid == 5) {
+    origin[0] = 0;
+    origin[1] = 0;
   }
 }
 
@@ -220,11 +256,7 @@ GetGridRank(const int grid)
 {
   if (grid == 0)
     return 2;
-  if (grid == 1)
-    return 1;
-  if (grid == 2)
-    return 1;
-  if (grid == 3)
+  if (grid == 1 || grid == 2 || grid == 3 || grid == 4 || grid == 5)
     return 1;
   else
     return -1;
@@ -240,8 +272,10 @@ GetGridSize(const int grid)
     return this->_model.dimensionlessDischargeShape;
   if (grid == 2)
     return this->_model.fluxShape;
-  if (grid == 2)
+  if (grid == 3 || grid == 4)
     return this->_model.vectorShapeDimensionlessDischarge;
+   if (grid == 5)
+    return 1;
   else
     return -1;
 }
@@ -252,11 +286,7 @@ GetGridType(const int grid)
 {
   if (grid == 0)
     return "uniform_rectilinear";
-  if (grid == 1)
-    return "vector";
-  if (grid == 2)
-    return "vector";
-  if (grid == 3)
+  if (grid == 1 || grid == 2 || grid == 3 || grid == 4 || grid == 5 )
     return "vector";
   else
     return "";
@@ -293,8 +323,10 @@ GetGridNodeCount(const int grid)
     return this->_model.dimensionlessDischargeShape;
   else if (grid == 2)
     return this->_model.fluxShape;
-  else if (grid == 2)
+  else if (grid == 3 || grid == 4)
     return this->_model.vectorShapeDimensionlessDischarge;
+  else if (grid == 5)
+    return 1;
   else
     return -1;
 }
@@ -364,8 +396,12 @@ GetValuePtr (std::string name)
     return (void*)this->_model.dimensionlessDischarge[0];
   else if (name.compare("dimensionless_flux") == 0)
     return (void*)this->_model.dimensionless_flux[0];
-  else if (name.compare("dimensionless_flux") == 0)
+  else if (name.compare("dimensionless_d50_vector") == 0)
     return (void*)this->_model.d50Vector[0];
+  else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
+    return (void*)this->_model.streamSegmentIDVector[0];
+  else if (name.compare("soil_density") == 0)
+    return (void*)this->_model.soilDensity;
   else
     return NULL;
 }
