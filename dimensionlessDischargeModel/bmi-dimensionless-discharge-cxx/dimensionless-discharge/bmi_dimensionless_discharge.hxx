@@ -33,6 +33,7 @@ class BmiDimensionlessDischarge : public bmi::Bmi {
     };
 
     void Initialize(std::string config_file);
+    void Initialize (double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity);
     void Update();
     void UpdateUntil(double time);
     void Finalize();
@@ -86,11 +87,11 @@ class BmiDimensionlessDischarge : public bmi::Bmi {
 
   private:
     dimensionlessDischarge::DimensionlessDischarge _model;
-    static const int input_var_name_count = 5;
-    static const int output_var_name_count = 5;
+    static const int input_var_name_count = 6;
+    static const int output_var_name_count = 6;
 
-    std::string input_var_names[5];
-    std::string output_var_names[5];
+    std::string input_var_names[6];
+    std::string output_var_names[6];
 };
 
 #endif

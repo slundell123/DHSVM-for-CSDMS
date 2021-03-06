@@ -17,10 +17,11 @@ namespace dimensionlessDischarge {
 
 
       void _initialize_arrays(void);
+      void _initialize_arrays(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity);
 
     public:
       // Input Values for dimensionless discharge
-      double soilDensity;
+      double** soilDensity;
       double d50;
       double** dimensionless_flux;
       double** dimensionlessDischarge;
@@ -42,6 +43,7 @@ namespace dimensionlessDischarge {
 
 
       DimensionlessDischarge();
+      DimensionlessDischarge(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity);
       DimensionlessDischarge(std::string config_file);
       DimensionlessDischarge(int vectorSize);
       ~DimensionlessDischarge();

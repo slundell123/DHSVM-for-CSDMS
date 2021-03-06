@@ -73,7 +73,7 @@ advance_in_time ()
   this->time += this->dt;
   for(int j = 0; j < this->vectorShapeDimensionlessDischarge; j++){
     
-    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
   }
 
   memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape);
@@ -87,7 +87,6 @@ DimensionlessDischarge(std::string config_file)
   // TODO: change file to read into these values instead of heat ones
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 997.; //(kg/m^2)
-  this->soilDensity = 1.33; //(g/cm^2)
   this->d50 = 5.8;
   this->d50VectorType = false;
   //this->dimensionlessDischarge = 1000.0;
@@ -125,7 +124,6 @@ dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vecto
   // dimensionless Discharge variable initialization
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 997.; //(kg/m^3)
-  this->soilDensity = 1330; //(kg/m^3)
   this->d50 = 5.8; //(m?)
   this->dimensionlessDischargeShape = vectorShape; //(int)
   this->fluxShape = vectorShape; //(int)
@@ -145,6 +143,91 @@ dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vecto
   this->dt = 1. / (4. * this->alpha);
 
   this->_initialize_arrays();
+}
+
+dimensionlessDischarge::DimensionlessDischarge::
+DimensionlessDischarge(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity){
+  // dimensionless Discharge variable initialization
+  this->gravityConst = 9.8; //(m/s^2)
+  this->waterDensityConst = 997.; //(kg/m^3)
+  this->d50 = 5.8; //(m?)
+  this->vectorShapeDimensionlessDischarge = sizeof( dimensionless_flux ); //(int)
+  this->_initialize_arrays( dimensionless_flux, d50Vector, streamSegmentIDVector, soilDensity);
+}
+
+void dimensionlessDischarge::DimensionlessDischarge::
+_initialize_arrays(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity){
+  int i;
+
+  const int dd_y = 1;
+  const int dd_x = this->vectorShapeDimensionlessDischarge;
+  const int ddLen = dd_x * dd_y;
+  double ddTop_x = dd_x - 1;
+
+  const int df_y = 1;
+  const int df_x = this->vectorShapeDimensionlessDischarge;
+  const int dfLen = dd_x * dd_y;
+  double dfTop_x = dd_x - 1;
+
+
+
+  ///Allocate memory 
+
+
+  this->temp_dimensionlessDischarge = new double*[dd_y];
+  this->dimensionlessDischarge = new double*[dd_y];
+  this->temp_dimensionless_flux = new double*[df_y];
+  this->dimensionless_flux = new double*[df_y];
+
+
+  this->temp_dimensionlessDischarge[0] = new double[dd_x * dd_y];
+  this->dimensionlessDischarge[0] = new double[dd_x * dd_y];
+  this->temp_dimensionless_flux[0] = new double[df_x * df_y];
+  this->dimensionless_flux[0] = new double[df_x * df_y];
+
+  
+  for (i=1; i<dd_y; i++) {
+    this->dimensionlessDischarge[i] = this->dimensionlessDischarge[i-1] + dd_x;
+    this->temp_dimensionlessDischarge[i] = this->temp_dimensionlessDischarge[i-1] + dd_x;
+  }
+  for (i=1; i<df_y; i++) {
+    this->dimensionless_flux[i] = this->dimensionless_flux[i-1] + df_x;
+    this->temp_dimensionless_flux[i] = this->temp_dimensionless_flux[i-1] + df_x;
+  }
+
+  // randomly set value in flux between 0 and 1 to try out the dimensionless discharge update function
+  for (i = 0; i < ddLen; i++)
+    this->dimensionless_flux[0][i] = dimensionless_flux[i];
+  for (i = 0; i < dfLen; i++)
+    this->dimensionlessDischarge[0][i] = 0;
+
+
+  // D50 vector 
+  this->d50Vector = new double*[dd_y];
+  this->d50Vector[0] = new double[dd_x * dd_y];
+
+  for (i = 0; i < ddLen; i++)
+    this->d50Vector[0][i] = 0;
+  
+  // Stream Segment ID vector 
+  
+  this->streamSegmentIDVector = new int*[dd_y];
+  this->streamSegmentIDVector[0] = new int[dd_x * dd_y];
+
+  for (i = 0; i < ddLen; i++) {
+    this->streamSegmentIDVector[0][i] = streamSegmentIDVector[i];
+  }
+
+  // soil density value 
+  
+  this->soilDensity = new double*[1];
+  this->soilDensity[0] = new double[1];
+
+  
+  this->soilDensity[0][0] = soilDensity;
+
+  memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double)*dd_x*dd_y);
+  memcpy (this->temp_dimensionless_flux[0], this->dimensionless_flux[0], sizeof (double)*df_x*df_y);
 }
 
 
@@ -229,6 +312,15 @@ _initialize_arrays(void)
     this->streamSegmentIDVector[0][i] = 0;
   }
 
+  // soil density value 
+  
+  this->soilDensity = new double*[1];
+  this->soilDensity[0] = new double[1];
+
+  
+  this->soilDensity[0][0] = 1388;
+  
+
 
  
 
@@ -244,7 +336,6 @@ DimensionlessDischarge()
   // dimensionless Discharge variable initialization
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 997.; //(kg/m^3)
-  this->soilDensity = 1330; //(kg/m^3)
   this->d50 = 5.8; //(m?)
   this->dimensionlessDischargeShape = 10;
   this->fluxShape = 10;

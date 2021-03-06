@@ -16,6 +16,13 @@ Initialize (std::string config_file)
   if (config_file.compare("") != 0 )
     this->_model = dimensionlessDischarge::DimensionlessDischarge(config_file); 
 }
+void BmiDimensionlessDischarge::
+Initialize (double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity)
+{
+  if ( sizeof(dimensionless_flux) == sizeof(d50Vector) && sizeof(dimensionless_flux) == sizeof(streamSegmentIDVector) && sizeof(dimensionless_flux) ){
+    this->_model = dimensionlessDischarge::DimensionlessDischarge( dimensionless_flux,  d50Vector,  streamSegmentIDVector,  soilDensity); 
+  }
+}
 
 
 void BmiDimensionlessDischarge::
@@ -192,7 +199,7 @@ GetGridShape(const int grid, int *shape)
     shape[0] = 1;
     shape[1] = this->_model.vectorShapeDimensionlessDischarge;
   }
-  if (grid == 4) {
+  if (grid == 5) {
     shape[0] = 1;
     shape[1] = 1;
   }
@@ -401,7 +408,7 @@ GetValuePtr (std::string name)
   else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
     return (void*)this->_model.streamSegmentIDVector[0];
   else if (name.compare("soil_density") == 0)
-    return (void*)this->_model.soilDensity;
+    return (void*)this->_model.soilDensity[0];
   else
     return NULL;
 }

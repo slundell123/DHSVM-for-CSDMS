@@ -51,4 +51,5 @@ RUN conda install -c conda-forge pymt
 WORKDIR /opt/test
 COPY pymt_dimensionless_discharge_ex.py ./
 COPY testingScript.py ./
-RUN python testingScript.py
+COPY testingScript2.py ./
+RUN python testingScript2.py
