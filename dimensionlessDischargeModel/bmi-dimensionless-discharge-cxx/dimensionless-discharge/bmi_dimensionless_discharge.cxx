@@ -443,12 +443,18 @@ SetValue (std::string name, void *src)
   void * dest = NULL;
 
   dest = this->GetValuePtr(name);
-
+  
+  int newSize = sizeof(src);
+  
+ 
+  // maybe make funciton in model to reset vales?
+  // issue with sizing of variables...
   if (dest) {
     int nbytes = 0;
     nbytes = this->GetVarNbytes(name);
     memcpy(dest, src, nbytes);
   }
+  
 }
 
 

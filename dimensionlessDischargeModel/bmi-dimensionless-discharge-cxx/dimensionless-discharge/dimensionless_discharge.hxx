@@ -13,7 +13,6 @@ namespace dimensionlessDischarge {
       // Constant Values for dimensionless discharge
       double gravityConst;
       double waterDensityConst;
-      bool d50VectorType;
 
 
       void _initialize_arrays(void);

@@ -52,4 +52,5 @@ WORKDIR /opt/test
 COPY pymt_dimensionless_discharge_ex.py ./
 COPY testingScript.py ./
 COPY testingScript2.py ./
+COPY config.txt ./
 RUN python testingScript2.py

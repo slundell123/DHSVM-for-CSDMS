@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <iostream>
 #include "dimensionless_discharge.hxx"
 
 
@@ -86,36 +87,35 @@ DimensionlessDischarge(std::string config_file)
   // dimensionless Discharge variable initialization with config
   // TODO: change file to read into these values instead of heat ones
   this->gravityConst = 9.8; //(m/s^2)
-  this->waterDensityConst = 997.; //(kg/m^2)
-  this->d50 = 5.8;
-  this->d50VectorType = false;
-  //this->dimensionlessDischarge = 1000.0;
-
+  this->waterDensityConst = 1000.0;
+  std::cout << "here" << " ";
   FILE * fp;
   double alpha = 1.;
   double t_end = 0.;
   int n_x = 0;
   int n_y = 0;
+  int size = 0;
+
+  std::cout << size << " ";
 
   fp = fopen (config_file.c_str (), "r");
 
-  fscanf (fp, "%lf, %lf, %d, %d", &alpha, &t_end, &n_x, &n_y);
+  std::cout << size << " ";
+
+
+  fscanf (fp, "%d", &size);
 
   fclose (fp);
 
-  this->alpha = alpha;
-  this->dt = 1. / (4. * alpha);
-  this->t_end = t_end;
   this->shape[0] = n_y;
   this->shape[1] = n_x;
   this->spacing[0] = 1.;
   this->spacing[1] = 1.;
   this->origin[0] = 0.;
   this->origin[1] = 0.;
-
-  this->dimensionlessDischargeShape = 10;
-  this->fluxShape = 10;
-  this->vectorShapeDimensionlessDischarge = 10;
+  this->vectorShapeDimensionlessDischarge = size;
+  this->dimensionlessDischargeShape = size;
+  this->fluxShape = size;
 
   this->_initialize_arrays();
 }
@@ -128,7 +128,6 @@ dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vecto
   this->dimensionlessDischargeShape = vectorShape; //(int)
   this->fluxShape = vectorShape; //(int)
   this->vectorShapeDimensionlessDischarge = vectorShape; //(int)
-  this->d50VectorType = false;
   
   // heat values
   this->alpha = 1.;
@@ -340,7 +339,6 @@ DimensionlessDischarge()
   this->dimensionlessDischargeShape = 10;
   this->fluxShape = 10;
   this->vectorShapeDimensionlessDischarge = 10;
-  this->d50VectorType = false;
   
   // heat values
   this->alpha = 1.;
