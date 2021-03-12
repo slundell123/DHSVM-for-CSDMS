@@ -16,13 +16,7 @@ Initialize (std::string config_file)
   if (config_file.compare("") != 0 )
     this->_model = dimensionlessDischarge::DimensionlessDischarge(config_file); 
 }
-void BmiDimensionlessDischarge::
-Initialize (double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity)
-{
-  if ( sizeof(dimensionless_flux) == sizeof(d50Vector) && sizeof(dimensionless_flux) == sizeof(streamSegmentIDVector) && sizeof(dimensionless_flux) ){
-    this->_model = dimensionlessDischarge::DimensionlessDischarge( dimensionless_flux,  d50Vector,  streamSegmentIDVector,  soilDensity); 
-  }
-}
+
 
 
 void BmiDimensionlessDischarge::
@@ -444,11 +438,6 @@ SetValue (std::string name, void *src)
 
   dest = this->GetValuePtr(name);
   
-  int newSize = sizeof(src);
-  
- 
-  // maybe make funciton in model to reset vales?
-  // issue with sizing of variables...
   if (dest) {
     int nbytes = 0;
     nbytes = this->GetVarNbytes(name);

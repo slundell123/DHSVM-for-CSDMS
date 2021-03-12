@@ -17,4 +17,3 @@ set -f && sudo docker run --rm -it \
   --security-opt seccomp=unconfined \
   -t babelizer:latest \
   /bin/bash #conda run -n wrap \
-  #test -f $CONDA_PREFIX/include/bmi_heat.h

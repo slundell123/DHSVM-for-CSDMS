@@ -88,47 +88,20 @@ DimensionlessDischarge(std::string config_file)
   // TODO: change file to read into these values instead of heat ones
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 1000.0;
-  std::cout << "here" << " ";
   FILE * fp;
   double alpha = 1.;
   double t_end = 0.;
   int n_x = 0;
   int n_y = 0;
   int size = 0;
-
-  std::cout << size << " ";
-
   fp = fopen (config_file.c_str (), "r");
-
-  std::cout << size << " ";
-
-
   fscanf (fp, "%d", &size);
-
   fclose (fp);
 
-  this->shape[0] = n_y;
-  this->shape[1] = n_x;
-  this->spacing[0] = 1.;
-  this->spacing[1] = 1.;
-  this->origin[0] = 0.;
-  this->origin[1] = 0.;
   this->vectorShapeDimensionlessDischarge = size;
   this->dimensionlessDischargeShape = size;
   this->fluxShape = size;
 
-  this->_initialize_arrays();
-}
-
-dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vectorShape){
-  // dimensionless Discharge variable initialization
-  this->gravityConst = 9.8; //(m/s^2)
-  this->waterDensityConst = 997.; //(kg/m^3)
-  this->d50 = 5.8; //(m?)
-  this->dimensionlessDischargeShape = vectorShape; //(int)
-  this->fluxShape = vectorShape; //(int)
-  this->vectorShapeDimensionlessDischarge = vectorShape; //(int)
-  
   // heat values
   this->alpha = 1.;
   this->t_end = 11.;
@@ -142,16 +115,6 @@ dimensionlessDischarge::DimensionlessDischarge::DimensionlessDischarge(int vecto
   this->dt = 1. / (4. * this->alpha);
 
   this->_initialize_arrays();
-}
-
-dimensionlessDischarge::DimensionlessDischarge::
-DimensionlessDischarge(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity){
-  // dimensionless Discharge variable initialization
-  this->gravityConst = 9.8; //(m/s^2)
-  this->waterDensityConst = 997.; //(kg/m^3)
-  this->d50 = 5.8; //(m?)
-  this->vectorShapeDimensionlessDischarge = sizeof( dimensionless_flux ); //(int)
-  this->_initialize_arrays( dimensionless_flux, d50Vector, streamSegmentIDVector, soilDensity);
 }
 
 void dimensionlessDischarge::DimensionlessDischarge::
@@ -336,9 +299,9 @@ DimensionlessDischarge()
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 997.; //(kg/m^3)
   this->d50 = 5.8; //(m?)
-  this->dimensionlessDischargeShape = 10;
-  this->fluxShape = 10;
-  this->vectorShapeDimensionlessDischarge = 10;
+  this->dimensionlessDischargeShape = 2;
+  this->fluxShape = 2;
+  this->vectorShapeDimensionlessDischarge = 2;
   
   // heat values
   this->alpha = 1.;

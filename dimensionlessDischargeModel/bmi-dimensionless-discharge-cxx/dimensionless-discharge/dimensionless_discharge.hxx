@@ -42,9 +42,7 @@ namespace dimensionlessDischarge {
 
 
       DimensionlessDischarge();
-      DimensionlessDischarge(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity);
       DimensionlessDischarge(std::string config_file);
-      DimensionlessDischarge(int vectorSize);
       ~DimensionlessDischarge();
       void advance_in_time ();
   };

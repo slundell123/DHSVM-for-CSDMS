@@ -33,7 +33,6 @@ class BmiDimensionlessDischarge : public bmi::Bmi {
     };
 
     void Initialize(std::string config_file);
-    void Initialize (double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity);
     void Update();
     void UpdateUntil(double time);
     void Finalize();

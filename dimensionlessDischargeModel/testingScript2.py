@@ -6,7 +6,7 @@ from pymt.models import DimensionlessDischargeBMI
 
 # variables to pass in:
 
-flux = [3.0, 2.0,8.0,9.0,10.0, 11.0 , 10.1, 12.12, 12.12, 23.2, 23.23, 23.23, 23.32, 23.23]
+flux = [3.0, 2.0,8.0]
 d50 = [.23, .5, .9]
 streamIds = [1,2,3]
 soilDensity = [1330.0]
@@ -16,9 +16,19 @@ soilDensity = [1330.0]
 m = DimensionlessDischargeBMI()
 print(m.name)
 
+# https://pymt.readthedocs.io/en/latest/usage.html#model-setups
 # Call setup, then initialize the model.
-#args = m.setup("config.txt")
-m.initialize()
+config_file, config_dir = m.setup(".")
+print(config_dir)
+print(config_file)
+config_file="config.txt"
+m.initialize(config_file, dir=config_dir)
+
+print("before set:")
+for i in range(len(m.output_var_names)-1):
+    print("Value of: ", m.output_var_names[i+1])
+    print(m.var[m.output_var_names[i+1]].data)
+
 
 m.set_value("soil_density", soilDensity)
 m.set_value("dimensionless_stream_segment_id_vector", streamIds)
