@@ -3,7 +3,6 @@ FROM condaforge/miniforge3
 WORKDIR /opt
 COPY environment.yml ./
 
-
 # conda environments are wonky in Docker.
 RUN conda env create --file environment.yml
 RUN echo "source activate wrap" >> ~/.bashrc
@@ -12,14 +11,18 @@ ENV PATH ${CONDA_PREFIX}/bin:$PATH
 
 
 COPY bmi-dimensionless-discharge-cxx /opt/bmi-dimensionless-discharge-cxx
-#COPY bmi-dimensionless-discharge-cxx/babel.toml /opt/babel.toml
+# #COPY bmi-dimensionless-discharge-cxx/babel.toml /opt/babel.toml
 
 WORKDIR /opt/bmi-dimensionless-discharge-cxx/_build
 RUN cmake .. -DCMAKE_INSTALL_PREFIX=${CONDA_PREFIX} && make install
 
 WORKDIR /opt
 RUN git clone https://github.com/csdms/babelizer
-RUN babelize init bmi-dimensionless-discharge-cxx/babel.toml .
+WORKDIR /opt/babelizer
+RUN git checkout tags/v0.3.7
+WORKDIR /opt
+
+RUN babelize init bmi-dimensionless-discharge-cxx/babel.toml 
 
 WORKDIR /opt/pymt_dimensionless_discharge
 RUN conda install -c conda-forge \

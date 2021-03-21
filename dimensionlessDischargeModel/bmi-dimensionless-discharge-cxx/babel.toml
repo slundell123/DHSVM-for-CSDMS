@@ -23,3 +23,7 @@ entry_point = "BmiDimensionlessDischarge"
 [package]
 name = "pymt_dimensionless_discharge"
 requirements = []
+
+[ci]
+os = "ubuntu"
+python_version = "3.9"
