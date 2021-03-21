@@ -25,7 +25,7 @@ namespace dimensionlessDischarge {
       double** dimensionless_flux;
       double** dimensionlessDischarge;
       double** d50Vector;
-      int** streamSegmentIDVector;
+      double** streamSegmentIDVector;
       int vectorShapeDimensionlessDischarge; // shape of all vectors 
       int dimensionlessDischargeShape;
       int fluxShape;

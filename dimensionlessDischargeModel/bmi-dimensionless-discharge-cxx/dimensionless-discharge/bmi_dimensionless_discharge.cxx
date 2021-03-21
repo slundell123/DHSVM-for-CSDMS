@@ -89,7 +89,7 @@ GetVarType(std::string name)
   else if (name.compare("dimensionless_d50_vector") == 0)
     return "double";
   else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
-    return "int";
+    return "double";
    else if (name.compare("soil_density") == 0)
     return "double";
   else
@@ -109,7 +109,7 @@ GetVarItemsize(std::string name)
   else if (name.compare("dimensionless_d50_vector") == 0)
     return sizeof(double);
   else if (name.compare("dimensionless_stream_segment_id_vector") == 0)
-    return sizeof(int);
+    return sizeof(double);
   else if (name.compare("soil_density") == 0)
     return sizeof(double);
   else

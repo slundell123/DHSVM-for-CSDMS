@@ -173,8 +173,8 @@ _initialize_arrays(double* dimensionless_flux, double* d50Vector, int* streamSeg
   
   // Stream Segment ID vector 
   
-  this->streamSegmentIDVector = new int*[dd_y];
-  this->streamSegmentIDVector[0] = new int[dd_x * dd_y];
+  this->streamSegmentIDVector = new double*[dd_y];
+  this->streamSegmentIDVector[0] = new double[dd_x * dd_y];
 
   for (i = 0; i < ddLen; i++) {
     this->streamSegmentIDVector[0][i] = streamSegmentIDVector[i];
@@ -267,8 +267,8 @@ _initialize_arrays(void)
   
   // Stream Segment ID vector 
   
-  this->streamSegmentIDVector = new int*[dd_y];
-  this->streamSegmentIDVector[0] = new int[dd_x * dd_y];
+  this->streamSegmentIDVector = new double*[dd_y];
+  this->streamSegmentIDVector[0] = new double[dd_x * dd_y];
 
   for (i = 0; i < ddLen; i++) {
     this->streamSegmentIDVector[0][i] = 0;

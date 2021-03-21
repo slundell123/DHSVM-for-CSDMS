@@ -31,6 +31,7 @@ for i in range(len(m.output_var_names)-1):
 
 
 m.set_value("soil_density", soilDensity)
+print(streamIds)
 m.set_value("dimensionless_stream_segment_id_vector", streamIds)
 m.set_value("dimensionless_d50_vector", d50)
 m.set_value("dimensionless_flux", flux)
