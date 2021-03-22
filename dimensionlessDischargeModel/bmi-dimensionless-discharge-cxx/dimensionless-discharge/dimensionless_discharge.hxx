@@ -16,7 +16,6 @@ namespace dimensionlessDischarge {
 
 
       void _initialize_arrays(void);
-      void _initialize_arrays(double* dimensionless_flux, double* d50Vector, int* streamSegmentIDVector, double soilDensity);
 
     public:
       // Input Values for dimensionless discharge

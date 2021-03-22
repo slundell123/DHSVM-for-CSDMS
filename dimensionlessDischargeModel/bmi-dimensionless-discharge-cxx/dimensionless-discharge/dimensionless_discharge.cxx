@@ -74,7 +74,7 @@ advance_in_time ()
   this->time += this->dt;
   for(int j = 0; j < this->vectorShapeDimensionlessDischarge; j++){
     
-    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50);
+    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50Vector[0][j]);
   }
 
   memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape);
