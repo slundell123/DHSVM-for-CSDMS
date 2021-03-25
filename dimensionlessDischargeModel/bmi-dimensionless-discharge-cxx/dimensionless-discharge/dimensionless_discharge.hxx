@@ -20,7 +20,6 @@ namespace dimensionlessDischarge {
     public:
       // Input Values for dimensionless discharge
       double** soilDensity;
-      double d50;
       double** dimensionless_flux;
       double** dimensionlessDischarge;
       double** d50Vector;

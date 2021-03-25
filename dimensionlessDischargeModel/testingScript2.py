@@ -4,6 +4,7 @@ from pymt.models import DimensionlessDischargeBMI
 import pandas as pd
 from datetime import datetime, timedelta
 import random
+import matplotlib.pyplot as plt
 
 # make file for output
 f = open("output.txt", "w")
@@ -86,7 +87,20 @@ for i in range(5):
     df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
       [lambda x: x['datetime'] == dateTime])
 
-    
+# make datafame out of output csv file
+outputDf = (pd.read_csv("output.csv"))
+print(outputDf)
+
+for segment in outputDf['segmentId'].unique():
+    dates = list(outputDf.loc[outputDf['segmentId'] == segment]['data'])
+    ddValues = list(outputDf.loc[outputDf['segmentId'] == segment]['dimensionlessDischarge'])
+    plt.plot(dates, ddValues)
+
+plt.ylabel('Dimensionless Dischange')
+
+plt.xlabel('Data')
+plt.savefig('outputPlot.pdf') 
+
 
 # Finalize the model.
 m.finalize()

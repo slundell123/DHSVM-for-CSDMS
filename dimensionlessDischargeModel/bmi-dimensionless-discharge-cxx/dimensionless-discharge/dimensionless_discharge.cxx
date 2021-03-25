@@ -4,49 +4,12 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
+#include <fstream>
 #include "dimensionless_discharge.hxx"
 
 
 #define OK (1)
 
-
-int
-dimensionless_discharge_solve_2d (double ** z, int shape[2], double spacing[2], double alpha,
-    double dt, double ** out)
-{
-  
-  {
-    int i, j;
-    const int top_row = shape[0] - 1;
-    const int top_col = shape[1] - 1;
-    const double dx2 = spacing[1] * spacing[1];
-    const double dy2 = spacing[0] * spacing[0];
-    const double c = alpha * dt / (dx2 + dy2);
-
-    for (i=1; i<top_row; i++)
-      for (j=1; j<top_col; j++) {
-        out[i][j] = c * (dx2 * (z[i][j - 1] + z[i][j + 1]) +
-                         dy2 * (z[i - 1][j] + z[i + 1][j]) -
-                         2. * (dx2 + dy2) * z[i][j]);
-      }
-
-    for (j=0; j<shape[1]; j++) {
-        out[0][j] = 0.;
-        out[top_row][j] = 0.;
-    }
-    for (i=0; i<shape[0]; i++) {
-        out[i][0] = 0.;
-        out[i][top_col] = 0.;
-    }
-
-    for (i=1; i<top_row; i++)
-      for (j=1; j<top_col; j++)
-        out[i][j] += z[i][j];
-  }
- 
-  return OK;
-  
-}
 
 int
 calculateDimensionlessDischarge (double ** dimensionlessDischarge, int shape, double ** out, double ** flux, double d50, double soilD, double waterD, double g)
@@ -72,9 +35,16 @@ void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
   this->time += this->dt;
+  std::string fileInput = "";
   for(int j = 0; j < this->vectorShapeDimensionlessDischarge; j++){
-    
     this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50Vector[0][j]);
+    fileInput += std::to_string(this->dimensionlessDischarge[0][j]) + ",";
+    std::string fileInput = std::to_string(j+1) + "," +std::to_string(this->time) + "," +std::to_string(this->dimensionlessDischarge[0][j]) + "\n";
+  
+    std::ofstream outputFile;
+    outputFile.open ("output.csv", std::ios_base::app);
+    outputFile << fileInput;
+    outputFile.close();
   }
 
   memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape);
@@ -113,6 +83,11 @@ DimensionlessDischarge(std::string config_file)
   this->origin[0] = 0.;
   this->origin[1] = 0.;
   this->dt = 1. / (4. * this->alpha);
+
+  std::ofstream outputFile;
+  outputFile.open("output.csv", std::ofstream::out | std::ofstream::trunc);
+  outputFile << "segmentId,data,dimensionlessDischarge,\n";
+  outputFile.close();
 
   this->_initialize_arrays();
 }
@@ -223,7 +198,6 @@ DimensionlessDischarge()
   // dimensionless Discharge variable initialization
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 997.; //(kg/m^3)
-  this->d50 = 5.8; //(m?)
   this->dimensionlessDischargeShape = 2;
   this->fluxShape = 2;
   this->vectorShapeDimensionlessDischarge = 2;
