@@ -6,6 +6,7 @@ cd ${LOCALWORKDIR} && \
   sudo docker build --tag=babelizer ${LOCALWORKDIR}
 
 sudo docker container prune --filter "until=12h" --force # Start container, run python script
+#sudo docker image prune
 
 #set -f && sudo docker run --rm -it \
 #  --security-opt seccomp=unconfined \

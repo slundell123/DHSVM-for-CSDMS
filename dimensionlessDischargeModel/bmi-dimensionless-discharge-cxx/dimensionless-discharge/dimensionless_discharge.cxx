@@ -86,7 +86,7 @@ DimensionlessDischarge(std::string config_file)
 
   std::ofstream outputFile;
   outputFile.open("output.csv", std::ofstream::out | std::ofstream::trunc);
-  outputFile << "segmentId,data,dimensionlessDischarge,\n";
+  outputFile << "segmentId,time,dimensionlessDischarge,\n";
   outputFile.close();
 
   this->_initialize_arrays();

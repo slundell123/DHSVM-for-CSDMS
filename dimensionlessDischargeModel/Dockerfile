@@ -58,3 +58,8 @@ COPY testingScript.py ./
 COPY testingScript2.py ./
 COPY config.txt ./
 RUN python testingScript2.py
+
+# use docker cp to get files from container to host
+# exit container without shutting down container: ctrl+p then ctrl+q
+# get container id: sudo docker ps
+# in host run: sudo docker cp [container ID]:/opt/test/outputPlot.pdf .

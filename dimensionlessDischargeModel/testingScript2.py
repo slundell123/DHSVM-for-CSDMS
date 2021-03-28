@@ -68,14 +68,13 @@ m.set_value("soil_density", soilDensity)
 m.set_value("dimensionless_d50_vector", d50)
 
 #while not df.empty:
-for i in range(5):    
+averageFlux = []
+for i in range(20):    
     flux = df['outflow.flux.mpts']
 
+    averageFlux.append(sum(list(flux)))
+
     m.set_value("dimensionless_flux", flux)
-
-
-    print("updating...")
-
     m.update()
     f = open("output.txt", "a")
     f.write(dateTime + "\n " + str(m.var[m.output_var_names[1]].data) +"\n")
@@ -89,16 +88,28 @@ for i in range(5):
 
 # make datafame out of output csv file
 outputDf = (pd.read_csv("output.csv"))
-print(outputDf)
+
+times = list(outputDf['time'].unique())
+averageDD = [0]*len(times)
 
 for segment in outputDf['segmentId'].unique():
-    dates = list(outputDf.loc[outputDf['segmentId'] == segment]['data'])
-    ddValues = list(outputDf.loc[outputDf['segmentId'] == segment]['dimensionlessDischarge'])
-    plt.plot(dates, ddValues)
+    segmentDf = outputDf.loc[outputDf['segmentId'] == segment]
+    for i in range(len(times)):
+        averageDD[i] += int(segmentDf.loc[segmentDf['time'] == times[i]]['dimensionlessDischarge'])
+
+for i in range(len(averageDD)):
+     averageDD[i] = averageDD[i]/len(outputDf['segmentId'].unique())
+     averageFlux[i] = averageFlux[i]/len(outputDf['segmentId'].unique())
+
+print(averageDD)
+print(times)
+plt.plot(times, averageDD)
+
+plt.plot(times, averageFlux)
 
 plt.ylabel('Dimensionless Dischange')
 
-plt.xlabel('Data')
+plt.xlabel('Time')
 plt.savefig('outputPlot.pdf') 
 
 
