@@ -67,12 +67,13 @@ m.set_value("soil_density", soilDensity)
 #m.set_value("dimensionless_stream_segment_id_vector", streamIds)
 m.set_value("dimensionless_d50_vector", d50)
 
+averageFlow = []
 #while not df.empty:
-averageFlux = []
-for i in range(20):    
-    flux = df['outflow.flux.mpts']
 
-    averageFlux.append(sum(list(flux)))
+for i in range(100):    
+    flux = df['outflow.flux.mpts']
+    flow = df['outflow.m3pts']
+    averageFlow.append(sum(list(flow)))
 
     m.set_value("dimensionless_flux", flux)
     m.update()
@@ -99,18 +100,19 @@ for segment in outputDf['segmentId'].unique():
 
 for i in range(len(averageDD)):
      averageDD[i] = averageDD[i]/len(outputDf['segmentId'].unique())
-     averageFlux[i] = averageFlux[i]/len(outputDf['segmentId'].unique())
+     averageFlow[i] = averageFlow[i]/len(outputDf['segmentId'].unique())
 
 print(averageDD)
 print(times)
-plt.plot(times, averageDD)
+plt.plot(times, averageDD, label='Dimensionless Dischange')
 
-plt.plot(times, averageFlux)
+plt.plot(times, averageFlow, label='Average Flow')
 
 plt.ylabel('Dimensionless Dischange')
 
 plt.xlabel('Time')
-plt.savefig('outputPlot.pdf') 
+plt.savefig('outputPlot.pdf')
+plt.legend()
 
 
 # Finalize the model.
