@@ -17,7 +17,7 @@ random.seed(2021)
 #help(DimensionlessDischargeBMI)
 
 # variables to pass in:
-start_date = "2017-12-01 00:00:00"
+start_date = "2018-03-01 00:00:00"
 date_time_obj = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
 dateTime = str(date_time_obj.date()) +"T"+str(date_time_obj.time())+"Z"
 
@@ -70,7 +70,7 @@ m.set_value("dimensionless_d50_vector", d50)
 averageFlow = []
 #while not df.empty:
 
-for i in range(100):    
+for i in range(552):    
     flux = df['outflow.flux.mpts']
     flow = df['outflow.m3pts']
     averageFlow.append(sum(list(flow)))
@@ -81,7 +81,7 @@ for i in range(100):
     f.write(dateTime + "\n " + str(m.var[m.output_var_names[1]].data) +"\n")
     f.close()
 
-    date_time_obj += timedelta(hours=1)
+    date_time_obj += timedelta(hours=4)
     dateTime = str(date_time_obj.date()) +"T"+str(date_time_obj.time())+"Z"
 
     df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
@@ -102,8 +102,6 @@ for i in range(len(averageDD)):
      averageDD[i] = averageDD[i]/len(outputDf['segmentId'].unique())
      averageFlow[i] = averageFlow[i]/len(outputDf['segmentId'].unique())
 
-print(averageDD)
-print(times)
 plt.plot(times, averageDD, label='Dimensionless Dischange')
 
 plt.plot(times, averageFlow, label='Average Flow')
