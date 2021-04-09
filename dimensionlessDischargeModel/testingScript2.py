@@ -70,7 +70,8 @@ m.set_value("dimensionless_d50_vector", d50)
 averageFlow = []
 #while not df.empty:
 
-for i in range(552):    
+#for i in range(552):
+for i in range(20):    
     flux = df['outflow.flux.mpts']
     flow = df['outflow.m3pts']
     averageFlow.append(sum(list(flow)))

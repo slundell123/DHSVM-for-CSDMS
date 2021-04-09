@@ -11,35 +11,23 @@
 #define OK (1)
 
 
-int
-calculateDimensionlessDischarge (double ** dimensionlessDischarge, int shape, double ** out, double ** flux, double d50, double soilD, double waterD, double g)
-{
-  
-  {
-    int i, j;
-    const int top_row = shape;
-    const int top_col = 1;
-
-    for (i=1; i<top_row; i++)
-      for (j=1; j<top_col; j++) {
-        out[i][j] = flux[i][j];///sqrt(((soilD-waterD)/waterD)*g*d50);
-
-      }
-  }
- 
-  return OK;
-  
-}
-
 void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
   this->time += this->dt;
   std::string fileInput = "";
   for(int j = 0; j < this->vectorShapeDimensionlessDischarge; j++){
-    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]-this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50Vector[0][j]);
+    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]
+    -this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50Vector[0][j]);
+
     fileInput += std::to_string(this->dimensionlessDischarge[0][j]) + ",";
-    std::string fileInput = std::to_string(j+1) + "," +std::to_string(this->time) + "," +std::to_string(this->dimensionlessDischarge[0][j]) + "\n";
+    std::string overThreshold = " ";
+    if (this->dimensionlessDischargeThreshold <= this->dimensionlessDischarge[0][j]){
+      overThreshold = std::to_string(this->dimensionlessDischargeThreshold);
+    }
+
+    std::string fileInput = std::to_string(j+1) + "," +std::to_string(this->time) 
+    + "," +std::to_string(this->dimensionlessDischarge[0][j]) + "," +overThreshold + "\n";
   
     std::ofstream outputFile;
     outputFile.open ("output.csv", std::ios_base::app);
@@ -47,9 +35,9 @@ advance_in_time ()
     outputFile.close();
   }
 
-  memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0], sizeof (double) * dimensionlessDischargeShape);
+  memcpy (this->temp_dimensionlessDischarge[0], this->dimensionlessDischarge[0],
+   sizeof (double) * dimensionlessDischargeShape);
 }
-
 
 dimensionlessDischarge::DimensionlessDischarge::
 DimensionlessDischarge(std::string config_file)
@@ -61,11 +49,10 @@ DimensionlessDischarge(std::string config_file)
   FILE * fp;
   double alpha = 1.;
   double t_end = 0.;
-  int n_x = 0;
-  int n_y = 0;
-  int size = 0;
+  int n_x, n_y,  size= 0;
+  double C, theta, N = 0;
   fp = fopen (config_file.c_str (), "r");
-  fscanf (fp, "%d", &size);
+  fscanf (fp, "%d", &size, &C, &theta, &N);
   fclose (fp);
 
   this->vectorShapeDimensionlessDischarge = size;
@@ -86,8 +73,10 @@ DimensionlessDischarge(std::string config_file)
 
   std::ofstream outputFile;
   outputFile.open("output.csv", std::ofstream::out | std::ofstream::trunc);
-  outputFile << "segmentId,time,dimensionlessDischarge,\n";
+  outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,\n";
   outputFile.close();
+
+  this->dimensionlessDischargeThreshold = C/(pow(tan(theta),N));
 
   this->_initialize_arrays();
 }
