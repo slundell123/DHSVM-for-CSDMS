@@ -21,13 +21,13 @@ advance_in_time ()
     -this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50Vector[0][j]);
 
     fileInput += std::to_string(this->dimensionlessDischarge[0][j]) + ",";
-    std::string overThreshold = " ";
+    bool overThreshold = false;
     if (this->dimensionlessDischargeThreshold <= this->dimensionlessDischarge[0][j]){
-      overThreshold = std::to_string(this->dimensionlessDischargeThreshold);
+      overThreshold = true;
     }
 
     std::string fileInput = std::to_string(j+1) + "," +std::to_string(this->time) 
-    + "," +std::to_string(this->dimensionlessDischarge[0][j]) + "," +overThreshold + "\n";
+    + "," +std::to_string(this->dimensionlessDischarge[0][j]) + "," + std::to_string(overThreshold) +  "\n";
   
     std::ofstream outputFile;
     outputFile.open ("output.csv", std::ios_base::app);
@@ -42,17 +42,22 @@ advance_in_time ()
 dimensionlessDischarge::DimensionlessDischarge::
 DimensionlessDischarge(std::string config_file)
 {
-  // dimensionless Discharge variable initialization with config
-  // TODO: change file to read into these values instead of heat ones
   this->gravityConst = 9.8; //(m/s^2)
   this->waterDensityConst = 1000.0;
   FILE * fp;
   double alpha = 1.;
   double t_end = 0.;
-  int n_x, n_y,  size= 0;
+  int n_x, n_y, size= 0;
   double C, theta, N = 0;
+
+  // setting up the output file (csv)
+  std::ofstream outputFile;
+  outputFile.open("output.csv", std::ofstream::out | std::ofstream::trunc);
+  outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,\n";
+
+  // Reading in the config file
   fp = fopen (config_file.c_str (), "r");
-  fscanf (fp, "%d", &size, &C, &theta, &N);
+  fscanf (fp, "%d, %lf, %lf, %lf", &size, &C, &theta, &N);
   fclose (fp);
 
   this->vectorShapeDimensionlessDischarge = size;
@@ -71,12 +76,12 @@ DimensionlessDischarge(std::string config_file)
   this->origin[1] = 0.;
   this->dt = 1. / (4. * this->alpha);
 
-  std::ofstream outputFile;
-  outputFile.open("output.csv", std::ofstream::out | std::ofstream::trunc);
-  outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,\n";
+  this->dimensionlessDischargeThreshold = C/(pow(tan(theta),N));
+
+
   outputFile.close();
 
-  this->dimensionlessDischargeThreshold = C/(pow(tan(theta),N));
+  
 
   this->_initialize_arrays();
 }

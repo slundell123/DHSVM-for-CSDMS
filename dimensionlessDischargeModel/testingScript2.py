@@ -28,9 +28,12 @@ df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
       [lambda x: x['datetime'] == dateTime])
 
 numElements = len(df)
-
+C = 2 
+theta = 4
+N = 5
+configText = str(numElements) + ", " + str(C) + ", " + str(theta) + ", " + str(N) + "\n"
 f = open("config.txt", "w")
-f.write(str(numElements))
+f.write(configText)
 f.close()
 
 d50 = []
@@ -70,8 +73,8 @@ m.set_value("dimensionless_d50_vector", d50)
 averageFlow = []
 #while not df.empty:
 
-#for i in range(552):
-for i in range(20):    
+for i in range(552):
+#for i in range(20):    
     flux = df['outflow.flux.mpts']
     flow = df['outflow.m3pts']
     averageFlow.append(sum(list(flow)))
@@ -88,6 +91,7 @@ for i in range(20):
     df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
       [lambda x: x['datetime'] == dateTime])
 
+'''
 # make datafame out of output csv file
 outputDf = (pd.read_csv("output.csv"))
 
@@ -112,7 +116,7 @@ plt.ylabel('Dimensionless Dischange')
 plt.xlabel('Time')
 plt.savefig('outputPlot.pdf')
 plt.legend()
-
+'''
 
 # Finalize the model.
 m.finalize()
