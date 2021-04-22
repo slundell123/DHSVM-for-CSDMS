@@ -27,11 +27,30 @@ timeUpdateAmount = timedelta(hours=1)
 df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
       [lambda x: x['datetime'] == dateTime])
 
+header_list = ['segment',
+               'order',
+               'slope',
+               'length.m',
+               'class',
+               'dest.channel',
+               'save',
+               'outlet']
+mapNetworkDf = (pd.read_csv("data/stream.network.csv", "\t", names=header_list))
+
 numElements = len(df)
 C = 2 
 theta = 4
 N = 5
-configText = str(numElements) + ", " + str(C) + ", " + str(theta) + ", " + str(N) + "\n"
+
+# make list of slopes
+slopeList = ""
+for slope in mapNetworkDf['slope']:
+    slopeList += str(slope)+","
+# remove extra end comma:
+slopeList = slopeList[0:-1]
+
+# set up config file
+configText = str(numElements) + "\n" + str(C) + "\n" + str(theta) + "\n" + str(N) + "\n" + slopeList + "\n"
 f = open("config.txt", "w")
 f.write(configText)
 f.close()

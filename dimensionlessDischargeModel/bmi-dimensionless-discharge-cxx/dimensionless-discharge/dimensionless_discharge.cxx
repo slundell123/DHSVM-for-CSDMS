@@ -22,7 +22,7 @@ advance_in_time ()
 
     fileInput += std::to_string(this->dimensionlessDischarge[0][j]) + ",";
     bool overThreshold = false;
-    if (this->dimensionlessDischargeThreshold <= this->dimensionlessDischarge[0][j]){
+    if (this->dimensionlessDischargeThreshold[j] <= this->dimensionlessDischarge[0][j]){
       overThreshold = true;
     }
 
@@ -49,6 +49,7 @@ DimensionlessDischarge(std::string config_file)
   double t_end = 0.;
   int n_x, n_y, size= 0;
   double C, theta, N = 0;
+  std::string slopesString;
 
   // setting up the output file (csv)
   std::ofstream outputFile;
@@ -56,13 +57,43 @@ DimensionlessDischarge(std::string config_file)
   outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,\n";
 
   // Reading in the config file
-  fp = fopen (config_file.c_str (), "r");
-  fscanf (fp, "%d, %lf, %lf, %lf", &size, &C, &theta, &N);
-  fclose (fp);
+  std::ifstream file("input.txt");
+  std::string str; 
+  int lineNumber = 0;
+  while (std::getline(file, str)) {
+    lineNumber += 1;
+    if (lineNumber  == 1){
+      size = std::stoi(str);
+    } else if (lineNumber  == 2){
+      C = std::stod(str);
+    } else if (lineNumber  == 3){
+      theta = std::stod(str);
+    }else if (lineNumber  == 4){
+      N = std::stod(str);
+    }else if (lineNumber  == 5){
+      slopesString = str;
+    }
+
+  }
+
+  //make the slope array:
+  double segmentSlopes [size];
+  std::string delimiter = ",";
+  size_t pos = 0;
+  std::string token;
+  int index = 0;
+  while ((pos = slopesString.find(delimiter)) != std::string::npos && index < size) {
+      token = slopesString.substr(0, pos);
+      segmentSlopes[index] = std::stod(token);
+      slopesString.erase(0, pos + delimiter.length());
+      index += 1;
+  }
+ 
 
   this->vectorShapeDimensionlessDischarge = size;
   this->dimensionlessDischargeShape = size;
   this->fluxShape = size;
+  this->streamSegmentSlope = segmentSlopes;
 
   // heat values
   this->alpha = 1.;
@@ -76,7 +107,12 @@ DimensionlessDischarge(std::string config_file)
   this->origin[1] = 0.;
   this->dt = 1. / (4. * this->alpha);
 
-  this->dimensionlessDischargeThreshold = C/(pow(tan(theta),N));
+  // calculate threshold values
+  double tempThresholdVals [size];
+  for(int i; i < size; i++){
+    tempThresholdVals[i] = C/(pow(tan(this->streamSegmentSlope[i]),N));
+  }
+  this->dimensionlessDischargeThreshold = tempThresholdVals;
 
 
   outputFile.close();
