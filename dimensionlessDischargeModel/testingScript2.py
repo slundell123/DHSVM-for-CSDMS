@@ -17,15 +17,30 @@ random.seed(2021)
 #help(DimensionlessDischargeBMI)
 
 # variables to pass in:
-start_date = "2018-03-01 00:00:00"
+start_date = "2018-01-02 00:00:00"
+end_date = "2018-02-01 00:00:00"
 date_time_obj = datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
+date_time_obj_end = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
 dateTime = str(date_time_obj.date()) +"T"+str(date_time_obj.time())+"Z"
 
-timeUpdateAmount = timedelta(hours=1)
+# original data
+#df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv"))
 
+# 1/2 hr Done
+#df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.0-05h.csv"))
 
-df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
-      [lambda x: x['datetime'] == dateTime])
+# 1 hr Done
+df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.1h.csv"))
+
+# 2 hr Done
+#df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.2h.csv"))
+
+# 6 hr Done
+#df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.6h.csv"))
+
+# 24 hr - DOne
+#df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.24h.csv"))
+print(df['datetime'])
 
 header_list = ['segment',
                'order',
@@ -35,12 +50,17 @@ header_list = ['segment',
                'dest.channel',
                'save',
                'outlet']
-mapNetworkDf = (pd.read_csv("data/stream.network.csv", "\t", names=header_list))
+mapNetworkDf = (pd.read_csv("stream.network.csv", "\t", names=header_list))
+print(len(df.loc[df['datetime'] == dateTime]))
 
-numElements = len(df)
-C = 2 
+numElements = len(df.loc[df['datetime'] == dateTime])
+# UL Thresholds
+C = 12.0
 theta = 4
-N = 5
+N = 0.85
+
+# time step in hours
+alpha = 1
 
 # make list of slopes
 slopeList = ""
@@ -50,7 +70,7 @@ for slope in mapNetworkDf['slope']:
 slopeList = slopeList[0:-1]
 
 # set up config file
-configText = str(numElements) + "\n" + str(C) + "\n" + str(theta) + "\n" + str(N) + "\n" + slopeList + "\n"
+configText = str(alpha) + '\n' + str(numElements) + "\n" + str(C) + "\n" + str(theta) + "\n" + str(N) + "\n" + slopeList + "\n"
 f = open("config.txt", "w")
 f.write(configText)
 f.close()
@@ -92,10 +112,12 @@ m.set_value("dimensionless_d50_vector", d50)
 averageFlow = []
 #while not df.empty:
 
-for i in range(552):
-#for i in range(20):    
-    flux = df['outflow.flux.mpts']
-    flow = df['outflow.m3pts']
+#for i in range(552):
+#for i in range(20):  
+while date_time_obj <= date_time_obj_end:
+    dfDate =  df.loc[df['datetime'] == dateTime]
+    flux = dfDate['outflow.flux.mpts']
+    flow = dfDate['outflow.m3pts']
     averageFlow.append(sum(list(flow)))
 
     m.set_value("dimensionless_flux", flux)
@@ -104,38 +126,8 @@ for i in range(552):
     f.write(dateTime + "\n " + str(m.var[m.output_var_names[1]].data) +"\n")
     f.close()
 
-    date_time_obj += timedelta(hours=4)
+    date_time_obj += timedelta(hours=alpha)
     dateTime = str(date_time_obj.date()) +"T"+str(date_time_obj.time())+"Z"
-
-    df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv")
-      [lambda x: x['datetime'] == dateTime])
-
-'''
-# make datafame out of output csv file
-outputDf = (pd.read_csv("output.csv"))
-
-times = list(outputDf['time'].unique())
-averageDD = [0]*len(times)
-
-for segment in outputDf['segmentId'].unique():
-    segmentDf = outputDf.loc[outputDf['segmentId'] == segment]
-    for i in range(len(times)):
-        averageDD[i] += int(segmentDf.loc[segmentDf['time'] == times[i]]['dimensionlessDischarge'])
-
-for i in range(len(averageDD)):
-     averageDD[i] = averageDD[i]/len(outputDf['segmentId'].unique())
-     averageFlow[i] = averageFlow[i]/len(outputDf['segmentId'].unique())
-
-plt.plot(times, averageDD, label='Dimensionless Dischange')
-
-plt.plot(times, averageFlow, label='Average Flow')
-
-plt.ylabel('Dimensionless Dischange')
-
-plt.xlabel('Time')
-plt.savefig('outputPlot.pdf')
-plt.legend()
-'''
 
 # Finalize the model.
 m.finalize()

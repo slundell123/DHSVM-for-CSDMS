@@ -57,20 +57,22 @@ DimensionlessDischarge(std::string config_file)
   outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,\n";
 
   // Reading in the config file
-  std::ifstream file("input.txt");
+  std::ifstream file("config.txt");
   std::string str; 
   int lineNumber = 0;
   while (std::getline(file, str)) {
     lineNumber += 1;
-    if (lineNumber  == 1){
-      size = std::stoi(str);
+    if(lineNumber == 1){
+      this->dt = std::stod(str);
     } else if (lineNumber  == 2){
-      C = std::stod(str);
+      size = std::stoi(str);
     } else if (lineNumber  == 3){
+      C = std::stod(str);
+    } else if (lineNumber  == 4){
       theta = std::stod(str);
-    }else if (lineNumber  == 4){
-      N = std::stod(str);
     }else if (lineNumber  == 5){
+      N = std::stod(str);
+    }else if (lineNumber  == 6){
       slopesString = str;
     }
 
@@ -96,7 +98,6 @@ DimensionlessDischarge(std::string config_file)
   this->streamSegmentSlope = segmentSlopes;
 
   // heat values
-  this->alpha = 1.;
   this->t_end = 11.;
   this->time = 0.;
   this->shape[0] = 10;
@@ -105,7 +106,6 @@ DimensionlessDischarge(std::string config_file)
   this->spacing[1] = 1.;
   this->origin[0] = 0.;
   this->origin[1] = 0.;
-  this->dt = 1. / (4. * this->alpha);
 
   // calculate threshold values
   double tempThresholdVals [size];
