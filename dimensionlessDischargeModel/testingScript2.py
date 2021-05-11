@@ -24,13 +24,13 @@ date_time_obj_end = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
 dateTime = str(date_time_obj.date()) +"T"+str(date_time_obj.time())+"Z"
 
 # original data
-#df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv"))
+df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv"))
 
 # 1/2 hr Done
 #df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.0-05h.csv"))
 
 # 1 hr Done
-df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.1h.csv"))
+#df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.1h.csv"))
 
 # 2 hr Done
 #df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.2h.csv"))
@@ -51,26 +51,25 @@ header_list = ['segment',
                'save',
                'outlet']
 mapNetworkDf = (pd.read_csv("stream.network.csv", "\t", names=header_list))
-print(len(df.loc[df['datetime'] == dateTime]))
+print("Num segments: ",len(df.loc[df['datetime'] == dateTime]))
 
-numElements = len(df.loc[df['datetime'] == dateTime])
+numElements = 138
 # UL Thresholds
 C = 12.0
-theta = 4
 N = 0.85
 
 # time step in hours
 alpha = 1
 
-# make list of slopes
+# make list of slopess
 slopeList = ""
 for slope in mapNetworkDf['slope']:
     slopeList += str(slope)+","
 # remove extra end comma:
 slopeList = slopeList[0:-1]
-
+print("Slopes:", slopeList)
 # set up config file
-configText = str(alpha) + '\n' + str(numElements) + "\n" + str(C) + "\n" + str(theta) + "\n" + str(N) + "\n" + slopeList + "\n"
+configText = str(alpha) + '\n' + str(numElements) + "\n" + str(C) + "\n" + str(N) + "\n" + slopeList + "\n"
 f = open("config.txt", "w")
 f.write(configText)
 f.close()
@@ -78,7 +77,8 @@ f.close()
 d50 = []
 streamIds = []
 for i in range(numElements):
-    d50.append(random.random())
+    #d50.append(random.random())
+    d50.append(0.015) # meters 
     #streamIds.append(i)
 
 #flux = [3.0, 2.0,8.0]
@@ -113,7 +113,8 @@ averageFlow = []
 #while not df.empty:
 
 #for i in range(552):
-#for i in range(20):  
+#for i in range(1):  
+
 while date_time_obj <= date_time_obj_end:
     dfDate =  df.loc[df['datetime'] == dateTime]
     flux = dfDate['outflow.flux.mpts']

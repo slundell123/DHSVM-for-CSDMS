@@ -54,7 +54,7 @@ RUN conda install -c conda-forge pymt
 WORKDIR /opt/test
 
 COPY data ./
-COPY data/stream.network.csv ./data
+RUN ls
 COPY pymt_dimensionless_discharge_ex.py ./
 COPY testingScript.py ./
 COPY testingScript2.py ./
@@ -64,4 +64,4 @@ RUN python testingScript2.py
 # use docker cp to get files from container to host
 # exit container without shutting down container: ctrl+p then ctrl+q
 # get container id: sudo docker ps
-# in host run: sudo docker cp [container ID]:/opt/test/outputPlot.pdf .
+# in host run: sudo docker cp [container ID]:/opt/test/output.csv .

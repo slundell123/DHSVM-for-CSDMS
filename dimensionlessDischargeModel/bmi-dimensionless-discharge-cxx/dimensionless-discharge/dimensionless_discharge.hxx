@@ -29,6 +29,7 @@ namespace dimensionlessDischarge {
       int vectorShapeDimensionlessDischarge; // shape of all vectors 
       int dimensionlessDischargeShape;
       int fluxShape;
+      double tempThresholdVals [138];
 
 
 

@@ -14,20 +14,23 @@
 void dimensionlessDischarge::DimensionlessDischarge::
 advance_in_time ()
 {
+
+
   this->time += this->dt;
   std::string fileInput = "";
-  for(int j = 0; j < this->vectorShapeDimensionlessDischarge; j++){
-    this->dimensionlessDischarge[0][j] = this->dimensionless_flux[0][j]/sqrt(((this->soilDensity[0][0]
-    -this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*this->d50Vector[0][j]);
+  for(int i = 0; i < this->vectorShapeDimensionlessDischarge; i++){
+    this->dimensionlessDischarge[0][i] = this->dimensionless_flux[0][i]/sqrt(((this->soilDensity[0][0]
+    -this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*pow(this->d50Vector[0][i], 3))*.001;
 
-    fileInput += std::to_string(this->dimensionlessDischarge[0][j]) + ",";
+    fileInput += std::to_string(this->dimensionlessDischarge[0][i]) + ",";
     bool overThreshold = false;
-    if (this->dimensionlessDischargeThreshold[j] <= this->dimensionlessDischarge[0][j]){
+    if (this->tempThresholdVals[i] <= this->dimensionlessDischarge[0][i]){
       overThreshold = true;
     }
 
-    std::string fileInput = std::to_string(j+1) + "," +std::to_string(this->time) 
-    + "," +std::to_string(this->dimensionlessDischarge[0][j]) + "," + std::to_string(overThreshold) +  "\n";
+    std::string fileInput = std::to_string(i+1) + "," +std::to_string(this->time) 
+    + "," +std::to_string(this->dimensionlessDischarge[0][i]) + "," + std::to_string(overThreshold) + ","
+    + std::to_string(this->tempThresholdVals[i]) +  "\n";
   
     std::ofstream outputFile;
     outputFile.open ("output.csv", std::ios_base::app);
@@ -43,18 +46,18 @@ dimensionlessDischarge::DimensionlessDischarge::
 DimensionlessDischarge(std::string config_file)
 {
   this->gravityConst = 9.8; //(m/s^2)
-  this->waterDensityConst = 1000.0;
+  this->waterDensityConst = 997.0; //(kg/m^3)
   FILE * fp;
   double alpha = 1.;
   double t_end = 0.;
   int n_x, n_y, size= 0;
-  double C, theta, N = 0;
+  double C, N = 0;
   std::string slopesString;
 
   // setting up the output file (csv)
   std::ofstream outputFile;
   outputFile.open("output.csv", std::ofstream::out | std::ofstream::trunc);
-  outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,\n";
+  outputFile << "segmentId,time,dimensionlessDischarge,overThreshold,threshold\n";
 
   // Reading in the config file
   std::ifstream file("config.txt");
@@ -68,11 +71,9 @@ DimensionlessDischarge(std::string config_file)
       size = std::stoi(str);
     } else if (lineNumber  == 3){
       C = std::stod(str);
-    } else if (lineNumber  == 4){
-      theta = std::stod(str);
-    }else if (lineNumber  == 5){
+    }else if (lineNumber  == 4){
       N = std::stod(str);
-    }else if (lineNumber  == 6){
+    }else if (lineNumber  == 5){
       slopesString = str;
     }
 
@@ -108,17 +109,20 @@ DimensionlessDischarge(std::string config_file)
   this->origin[1] = 0.;
 
   // calculate threshold values
-  double tempThresholdVals [size];
-  for(int i; i < size; i++){
-    tempThresholdVals[i] = C/(pow(tan(this->streamSegmentSlope[i]),N));
+  this->dimensionlessDischargeThreshold = new double[size];
+  for(int i =0 ; i < size; i++){
+    double val = C/(pow(tan(this->streamSegmentSlope[i]),N));
+    this->tempThresholdVals[i] = val;
+    //outputFile << std::to_string(i) + " " + std::to_string(this->streamSegmentSlope[i]) + " " + std::to_string(C)
+    //+ " " + std::to_string(N) + " " +std::to_string(tan(this->streamSegmentSlope[i])) + " "
+    //+ std::to_string(pow(tan(this->streamSegmentSlope[i]),N)) + " " + std::to_string(C/(pow(tan(this->streamSegmentSlope[i]),N))) +"\n";
   }
-  this->dimensionlessDischargeThreshold = tempThresholdVals;
-
-
-  outputFile.close();
+  
+  this->dimensionlessDischargeThreshold = this->tempThresholdVals;
 
   
 
+  outputFile.close();
   this->_initialize_arrays();
 }
 
@@ -126,6 +130,7 @@ DimensionlessDischarge(std::string config_file)
 void dimensionlessDischarge::DimensionlessDischarge::
 _initialize_arrays(void)
 {
+  
   
   int i;
   const int n_y = this->shape[0];
