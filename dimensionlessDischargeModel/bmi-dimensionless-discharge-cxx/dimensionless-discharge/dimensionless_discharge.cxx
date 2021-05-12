@@ -20,7 +20,7 @@ advance_in_time ()
   std::string fileInput = "";
   for(int i = 0; i < this->vectorShapeDimensionlessDischarge; i++){
     this->dimensionlessDischarge[0][i] = this->dimensionless_flux[0][i]/sqrt(((this->soilDensity[0][0]
-    -this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*pow(this->d50Vector[0][i], 3))*.001;
+    -this->waterDensityConst)/this->waterDensityConst)*this->gravityConst*pow(this->d50Vector[0][i], 3));
 
     fileInput += std::to_string(this->dimensionlessDischarge[0][i]) + ",";
     bool overThreshold = false;

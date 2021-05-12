@@ -24,13 +24,13 @@ date_time_obj_end = datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
 dateTime = str(date_time_obj.date()) +"T"+str(date_time_obj.time())+"Z"
 
 # original data
-df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv"))
+#df = (pd.read_csv("20210204.matilija.dhsvm.discharge.flux.csv"))
 
 # 1/2 hr Done
 #df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.0-05h.csv"))
 
 # 1 hr Done
-#df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.1h.csv"))
+df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.1h.csv"))
 
 # 2 hr Done
 #df = (pd.read_csv("20210413.matilija.dhsvm.discharge.flux.2h.csv"))
@@ -117,7 +117,7 @@ averageFlow = []
 
 while date_time_obj <= date_time_obj_end:
     dfDate =  df.loc[df['datetime'] == dateTime]
-    flux = dfDate['outflow.flux.mpts']
+    flux = dfDate['outflow.flux.mps']
     flow = dfDate['outflow.m3pts']
     averageFlow.append(sum(list(flow)))
 
