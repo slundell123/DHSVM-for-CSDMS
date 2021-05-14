@@ -1,0 +1,29 @@
+
+[build]
+define_macros = []
+extra_compile_args = []
+include_dirs = []
+libraries = []
+library_dirs = []
+undef_macros = []
+
+[info]
+github_username = "slundell123"
+plugin_author = "Sarah Lundell"
+plugin_author_email = ""
+plugin_license = "MIT"
+summary = "PyMT plugin for dimensionless discharge model"
+
+[library.DimensionlessDischargeBMI]
+language = "c++"
+header = "bmi_dimensionless_discharge.hxx"
+library = "bmidimensionlessdischargecxx"
+entry_point = "BmiDimensionlessDischarge"
+
+[package]
+name = "pymt_dimensionless_discharge"
+requirements = []
+
+[ci]
+os = "ubuntu"
+python_version = "3.9"
