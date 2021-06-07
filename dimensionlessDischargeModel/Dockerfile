@@ -59,7 +59,7 @@ COPY pymt_dimensionless_discharge_ex.py ./
 COPY testingScript.py ./
 COPY testingScript2.py ./
 COPY config.txt ./
-RUN python testingScript2.py
+#RUN python testingScript2.py
 
 # use docker cp to get files from container to host
 # exit container without shutting down container: ctrl+p then ctrl+q
