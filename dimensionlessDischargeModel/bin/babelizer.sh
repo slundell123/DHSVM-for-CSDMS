@@ -9,9 +9,9 @@ sudo docker container prune --filter "until=12h" --force # Start container, run 
 #sudo docker image prune
 
 set -f && sudo docker run --rm -it \
-  -v $PYTHONSCRIPT:/data/pythonScript.py \
+  -v $PYTHONSCRIPT:/opt/test/pythonScript.py \
   --security-opt seccomp=unconfined \
   -t babelizer:latest \
-  conda run -n wrap \
-  python /data/pythonScript.py
+  #conda run -n wrap \
+  #python /opt/test/pythonScript.py
   /bin/bash #conda run -n wrap \
